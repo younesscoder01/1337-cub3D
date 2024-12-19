@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 16:46:14 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:35:26 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int main(int argc, char **argv)
 {
+    t_img_info minimap_img;
+    void *mlx;
+    void *mlx_win;
+    t_player p;
+    t_data data;
     if (argc != 2)
         return printf("Error\n");
     else
