@@ -1,6 +1,8 @@
 # Prerequisites
 *.d
 .vscode
+#program name
+cub3D
 
 # Object files
 *.o
