@@ -1,10 +1,10 @@
 #include "../includes/cub3D.h"
-
-int setup(int argc, char **argv, t_data * d)
-{
-	if(read_map(open(argv[1], 0644), &)
-}
-int line_porcessing(char *str)
+/*
+	- CHECK THE BOUNDARIES OF THE MAP
+	TODO : flood fill to check if the map is open
+	-UPDATE THE STRUCT WITH 2D MAP
+*/
+int line_processing(char *str)
 {
 	while (*str)
 	{
@@ -13,6 +13,13 @@ int line_porcessing(char *str)
 		str++;
 	}
 	return(true);
+}
+void print_map(char **str)
+{
+	for(int i =0; str[i]; i++)
+	{
+		printf("%s\n", str[i]);
+	}
 }
 int read_map(int fd, t_data *data)
 {
@@ -43,9 +50,16 @@ int read_map(int fd, t_data *data)
 		j++;
 	}
 	data->map = ft_split(full, '\n');
-	printf("starting position: %d %d\n", data->st_pos[0], data->st_pos[1]);
-
 	free(full);
 	close(fd);
+	print_map(data->map);
+	return(true);
+}
+
+int setup(int argc, char **argv, t_data *d)
+{
+	(void)argc;
+	if(read_map(open(argv[1], 0644), d))
+		return(false);
 	return(true);
 }

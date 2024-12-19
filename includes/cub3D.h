@@ -6,26 +6,30 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 20:14:13 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:42:51 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+/*------------Libraries----------*/
 # include <stdio.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
+# include "../libft/libft.h"
 
+/*------------Macros-------------*/
 # define TILE_SIZE 22
 # define WINDOW_WIDTH 720
 # define WINDOW_HEIGHT 720
 # define RADIUS 5
-# define M_PI		3.14159265358979323846
+# define M_PI 3.14159265358979323846
 
+/*-------------Enums------------*/
 enum{
 	W = 180,
 	S = 90,
@@ -56,6 +60,7 @@ enum {
 	ESC = 65307
 };
 
+/*------------Structs------------*/
 //player struct
 typedef struct s_player
 {
@@ -90,7 +95,8 @@ typedef struct  s_data
 	char **map;
 }               t_data;
 
-//fuctions
+/*------------Functions Prototypes--------------*/
+
 size_t get_map_width(char **map_name);
 size_t get_map_height(char **map_name);
 void render_minimap(t_data *data);
@@ -105,4 +111,5 @@ int key_r(int keycode, void *var);
 double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
+int setup(int argc, char **argv, t_data * d);
 #endif
