@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 10:10:37 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 17:55:46 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:07:50 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ void render_p(t_img_info *img, t_player *p)
         for (int j = 0; j < d; j++)
             if (pow(j - p->radius, 2) + pow(i - p->radius,2) <= pow(p->radius,2))
                 ft_put_pixel(img, (j+p->x-p->radius)  , (i+p->y-p->radius), 0x00FF0000);
-    x1 = p->x + cos(deg2rad(p->rotationAngle)) * 15;
-    y1 = p->y + sin(deg2rad(p->rotationAngle)) * 15;
+    x1 = p->x + cos(deg2rad(p->rotationAngle)) * LINE_LENGTH;
+    y1 = p->y + sin(deg2rad(p->rotationAngle)) * LINE_LENGTH;
     draw_line(p->x, p->y, x1 , y1, img, 0x00FF0000);
 }
 
@@ -154,5 +154,5 @@ void render_minimap(t_data *data)
     render_wall(data->map, data->minimap_img);      
     render_floor(data->map, data->minimap_img);
     render_p(data->minimap_img, &data->player);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->minimap_img->img, 0 , 0);
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->minimap_img->img, 0 , 0);
 }

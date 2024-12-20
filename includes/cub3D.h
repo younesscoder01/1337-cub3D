@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 17:54:42 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:07:36 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,23 @@
 # include <mlx.h>
 # include <math.h>
 
-# define TILE_SIZE 22
-# define WINDOW_WIDTH 720
+# define WINDOW_WIDTH 1080
 # define WINDOW_HEIGHT 720
-# define RADIUS 5
+# define FRAME_WIDTH (TILE_SIZE * 3)
+# define FRAME_HEIGHT (FRAME_WIDTH / 2)
+# define TILE_SIZE (WINDOW_WIDTH / 12)
+# define RADIUS (TILE_SIZE / 12)
+# define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
+
+
+//colors
+# define BLACK 0x00000000
+# define WHITE 0x00FFFFFF
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define BLUE 0x000000FF
+# define lfaa5ti 0x0044b6b7
 
 enum{
 	W = 180,
@@ -86,6 +98,7 @@ typedef struct  s_data
     void	*mlx_win;
 	t_player player;
 	t_img_info *minimap_img;
+	t_img_info *frame;
 	char **map;
 }               t_data;
 
@@ -104,4 +117,6 @@ int key_r(int keycode, void *var);
 double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
+int get_player_x(char **map);
+int get_player_y(char **map);
 #endif

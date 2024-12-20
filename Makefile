@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -I/usr/local/include -L/usr/local/lib -O3 -g3 -Wall -Wextra -Werror
+CFLAGS = -I/usr/local/include -O3 -g3 -Wall -Wextra -Werror
 LDLIBS = -lmlx -lXext -lX11 -lm
 
 SRCDIR = ./src
