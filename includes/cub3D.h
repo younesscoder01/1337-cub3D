@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 21:42:51 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/21 12:27:45 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ enum {
 };
 
 /*------------Structs------------*/
+//bfs sturct
+typedef struct node
+{
+        struct node     *next;
+        struct node     *parent;
+        int                     x;
+        int                     y;
+}                               t_node;
 //player struct
 typedef struct s_player
 {
@@ -88,9 +96,12 @@ typedef struct	s_img_info {
 //data struct that containing all the data
 typedef struct  s_data
 {
-    void	*mlx;
-    void	*mlx_win;
-	t_player player;
+    void		*mlx;
+    void		*mlx_win;
+	t_player	player;
+	int			**check_arr;
+	int 		map_x;
+	int 		map_y;
 	t_img_info *minimap_img;
 	char **map;
 }               t_data;
@@ -112,4 +123,7 @@ double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
 int setup(int argc, char **argv, t_data * d);
+int	bfs(int st_x, int st_y, t_data *d, int map_h);
+int	find_longest_row(char **map);
+void free_arr(void **arr, int i);
 #endif
