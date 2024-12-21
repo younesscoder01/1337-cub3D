@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 17:52:40 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/21 10:14:33 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,122 @@ int key_r(int keycode, void *var)
     return 0;
 }
 
+
+unsigned int get_px_color(t_img_info *img, int x, int y)
+{
+    char *pxl;
+
+    pxl = 0;
+    if (x >= 0 && x < img->img_width && y >= 0 && y < img->img_height)
+    {
+        pxl = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+    }
+    if (pxl == 0)
+        return 6;
+    return *(unsigned int *)pxl;
+}
+
+
+void copy_img(t_img_info *src, t_img_info *dest, int x, int y, int height, int width)
+{
+    int i;
+    int j;
+    int xc;
+
+    i = 0;
+    while (i < height)
+    {
+        j = 0;
+        xc = x;
+        while (j < width)
+        {
+            ft_put_pixel(dest, j, i, get_px_color(src, xc, y));
+            xc++;
+            j++;
+        }
+        y++;
+        i++;
+    }
+}
+void rect(t_img_info *img, int x, int y, int width, int height, int color)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < height)
+    {
+        j = 0;
+        while (j < width)
+        {
+            ft_put_pixel(img, x + j, y + i, color);
+            j++;
+        }
+        i++;
+    }
+}
+
+void create_frame(t_data *data, int fx, int fy)
+{
+    fx = data->player.x - FRAME_WIDTH / 2;
+    fy = data->player.y - FRAME_HEIGHT / 2;
+    
+    if (fx < 0)
+        fx = 0;
+    else if (fx > data->minimap_img->img_width)
+        fx = data->minimap_img->img_width - FRAME_WIDTH;
+    if (fy < 0)
+        fy = 0;
+    else if (fy > data->minimap_img->img_height)
+        fy = data->minimap_img->img_height - FRAME_HEIGHT;
+    copy_img(data->minimap_img, data->frame, fx, fy, FRAME_HEIGHT, FRAME_WIDTH);
+    rect(data->frame, 0, 0, FRAME_WIDTH, 10, lfaa5ti);
+    rect(data->frame, 0, 0, 10, FRAME_WIDTH, lfaa5ti);
+    rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, lfaa5ti);
+    rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, lfaa5ti);
+    copy_img(data->frame, data->game_frame, 0, 0, FRAME_HEIGHT, FRAME_WIDTH);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+}
+
+void floor_ceiling(t_img_info *img, int color1, int color2)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < img->img_height / 2)
+    {
+        j = 0;
+        while (j < img->img_width)
+        {
+            ft_put_pixel(img, j, i, color1);
+            j++;
+        }
+        i++;
+    }
+    while (i < img->img_height)
+    {
+        j = 0;
+        while (j < img->img_width)
+        {
+            ft_put_pixel(img, j, i, color2);
+            j++;
+        }
+        i++;
+    }
+}
+
 int render_next_frame(void *data1)
 {
     t_data *data;
 
     data = (t_data *)data1;
     render_minimap(data);
+    floor_ceiling(data->game_frame, BLUE, WHITE);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    create_frame(data, 0, 0);
+    // printf("player x: %i\nplayer y: %i\n", data->player.x, data->player.y);
+    //TODO=rays calculation
+    
     return 0;
 }

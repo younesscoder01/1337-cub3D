@@ -147,13 +147,34 @@ int read_map(int fd, t_data *data)
 	print_map(data->map);
 	return(true);
 }
+int read_textures_colors(fd)
+{
+    char *read;
+	int item;
 
+    read = get_next_line(fd);
+	while (read)
+	{
+		//parse each line of the map if it contains only 1, 0, N, S, E, W
+		if(!line_processing(read, &item))
+		{
+			free(read);
+			close(fd);
+			return(false);
+		}
+		//if not return 1
+		free(read);
+		read = get_next_line(fd);
+		j++;
+	}
+}
 int setup(int argc, char **argv, t_data *d)
 {
 	(void)argc;
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
+	read_textures_colors(fd)
 	if(!read_map(fd, d))
 		return(false);
 	return(true);

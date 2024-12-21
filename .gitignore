@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 .vscode
+*.tldr
 #program name
 cub3D
 

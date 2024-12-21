@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 15:20:27 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:46:24 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,24 @@
 # include "../libft/libft.h"
 
 /*------------Macros-------------*/
-# define TILE_SIZE 22
-# define WINDOW_WIDTH 720
-# define WINDOW_HEIGHT 720
-# define RADIUS 5
 # define M_PI 3.14159265358979323846
+# define WINDOW_WIDTH 1080
+# define WINDOW_HEIGHT 720
+# define FRAME_WIDTH (TILE_SIZE * 3)
+# define FRAME_HEIGHT (FRAME_WIDTH / 2)
+# define TILE_SIZE (WINDOW_WIDTH / 12)
+# define RADIUS (TILE_SIZE / 12)
+# define LINE_LENGTH (RADIUS * 3)
+# define M_PI		3.14159265358979323846
+
+
+//colors
+# define BLACK 0x00000000
+# define WHITE 0x00FFFFFF
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define BLUE 0x000000FF
+# define lfaa5ti 0x0044b6b7
 
 /*-------------Enums------------*/
 enum{
@@ -103,6 +116,8 @@ typedef struct  s_data
 	int 		map_x;
 	int 		map_y;
 	t_img_info *minimap_img;
+	t_img_info *frame;
+    t_img_info *game_frame;
 	char **map;
 }               t_data;
 
@@ -127,4 +142,7 @@ int	bfs(int st_x, int st_y, t_data *d, int map_h);
 int	find_longest_row(char **map);
 void free_arr(void **arr, int i);
 void print_arr(int **arr, int max_r, int map_h);
+int get_player_x(char **map);
+int get_player_y(char **map);
+void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
 #endif
