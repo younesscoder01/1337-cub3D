@@ -38,7 +38,7 @@ int line_processing(char *str, int *item)
 		if(*str != 'N' &&  *str != 'E' &&  *str != 'W' &&  *str != 'S' && *str != '0' && *str != '1' && *str != ' ' && *str != '\n')
 			return(false);
 		if(*str == 'N' || *str == 'E' ||  *str == 'W' ||  *str == 'S')
-			*item = 1;
+			*item += 1;
 		str++;
 	}
 	return(true);
