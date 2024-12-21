@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 10:10:37 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/20 18:07:50 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/21 09:59:40 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void render_p(t_img_info *img, t_player *p)
     d = p->radius*2;
     for (int i = 0; i < d; i++)
         for (int j = 0; j < d; j++)
-            if (pow(j - p->radius, 2) + pow(i - p->radius,2) <= pow(p->radius,2))
+            if (pow(j - p->radius, 2) + pow(i - p->radius,2) < pow(p->radius,2))
                 ft_put_pixel(img, (j+p->x-p->radius)  , (i+p->y-p->radius), 0x00FF0000);
     x1 = p->x + cos(deg2rad(p->rotationAngle)) * LINE_LENGTH;
     y1 = p->y + sin(deg2rad(p->rotationAngle)) * LINE_LENGTH;

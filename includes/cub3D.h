@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/20 18:07:36 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/21 10:07:05 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct  s_data
 	t_player player;
 	t_img_info *minimap_img;
 	t_img_info *frame;
+    t_img_info *game_frame;
 	char **map;
 }               t_data;
 
@@ -119,4 +120,5 @@ double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
 int get_player_x(char **map);
 int get_player_y(char **map);
+void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
 #endif

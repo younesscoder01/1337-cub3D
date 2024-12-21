@@ -4,7 +4,7 @@ LDLIBS = -lmlx -lXext -lX11 -lm
 
 SRCDIR = ./src
 OBJDIR = ./obj
-SRC = ./src/cub3D.c ./src/mini_map.c ./src/mini_map_utils.c ./src/render_frames.c
+SRC = ./src/cub3D.c ./src/mini_map.c ./src/mini_map_utils.c ./src/render_frames.c ./src/initialize_data.c
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 NAME = cub3D
 

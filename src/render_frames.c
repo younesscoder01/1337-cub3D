@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/20 18:01:03 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/21 10:14:33 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void rect(t_img_info *img, int x, int y, int width, int height, int color)
     }
 }
 
-void get_xf_fy(t_data *data, int fx, int fy)
+void create_frame(t_data *data, int fx, int fy)
 {
     fx = data->player.x - FRAME_WIDTH / 2;
     fy = data->player.y - FRAME_HEIGHT / 2;
@@ -159,7 +159,36 @@ void get_xf_fy(t_data *data, int fx, int fy)
     rect(data->frame, 0, 0, 10, FRAME_WIDTH, lfaa5ti);
     rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, lfaa5ti);
     rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, lfaa5ti);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->frame->img, 0, 0);
+    copy_img(data->frame, data->game_frame, 0, 0, FRAME_HEIGHT, FRAME_WIDTH);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+}
+
+void floor_ceiling(t_img_info *img, int color1, int color2)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < img->img_height / 2)
+    {
+        j = 0;
+        while (j < img->img_width)
+        {
+            ft_put_pixel(img, j, i, color1);
+            j++;
+        }
+        i++;
+    }
+    while (i < img->img_height)
+    {
+        j = 0;
+        while (j < img->img_width)
+        {
+            ft_put_pixel(img, j, i, color2);
+            j++;
+        }
+        i++;
+    }
 }
 
 int render_next_frame(void *data1)
@@ -168,8 +197,11 @@ int render_next_frame(void *data1)
 
     data = (t_data *)data1;
     render_minimap(data);
+    floor_ceiling(data->game_frame, BLUE, WHITE);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    create_frame(data, 0, 0);
     // printf("player x: %i\nplayer y: %i\n", data->player.x, data->player.y);
-    get_xf_fy(data, 0, 0);
+    //TODO=rays calculation
     
     return 0;
 }
