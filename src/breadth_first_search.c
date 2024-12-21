@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:30:24 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/21 12:28:55 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/21 16:23:49 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	neighbors(t_node **queue, t_node *cur, t_data *d, int **vis)
 	
 	if(!x || !y || x == d->map_y -1 || y == d->map_x -1  ||d->map[x][y] == ' ')
 	{
+		printf("x = %d, y = %d\n", x, y);
 		return(EXIT_FAILURE);
 	}
 	if (x + 1 <= d->map_y - 1 && (d->map[x + 1][y] != '1') && vis[x + 1][y] == 0)
@@ -111,7 +112,7 @@ int	init_row(int **arr, int i, char **map, int len_r)
 		// if(j > len - 1)
 		// 	arr[i][j] = 5;
 		// else
-			arr[i][j] = 0;
+		arr[i][j] = 0;
 		j++;
 	}
 	return (EXIT_SUCCESS);
@@ -172,7 +173,7 @@ int	bfs(int st_x, int st_y, t_data *d, int map_h)
 	int		i;
 	
 	i = 0;
-	arr = malloc(sizeof(int *) * d->map_x);
+	arr = malloc(sizeof(int *) * (d->map_x + 1));
 	if (!arr)
 		return (1);
 	while (i < map_h)
@@ -181,13 +182,18 @@ int	bfs(int st_x, int st_y, t_data *d, int map_h)
 			return (1);
 		i++;
 	}
+	arr[d->map_y] = NULL;
 	queue = NULL;
 	enqueue(&queue, st_x, st_y);
 	while (queue)
 	{
 		arr[queue->x][queue->y] = 6;
+		// print_arr(arr, d->map_x, map_h);
+		// printf("\n\n\n");
+		// sleep(1);
 		if(neighbors(&queue, queue, d, arr))
 		{
+			print_arr(arr, d->map_x, map_h);
 			free_queue(queue);
 			d->check_arr = arr;
 			return(EXIT_FAILURE);

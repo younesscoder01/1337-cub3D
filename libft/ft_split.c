@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 11:20:33 by rbenmakh          #+#    #+#             */
-/*   Updated: 2023/11/24 10:06:42 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:41:51 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	**ft_fill(char const *str, char charset, int words, int i)
 	ptr = (char **)malloc((words + 1) * sizeof(char *));
 	if (ptr == NULL)
 		return (0);
-	while (str[++i] && j < words)
+	while (j < words && str[++i] )
 	{
 		while (str[i] == charset)
 			i++;

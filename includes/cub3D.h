@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 12:27:45 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/21 15:20:27 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ int setup(int argc, char **argv, t_data * d);
 int	bfs(int st_x, int st_y, t_data *d, int map_h);
 int	find_longest_row(char **map);
 void free_arr(void **arr, int i);
+void print_arr(int **arr, int max_r, int map_h);
 #endif

@@ -4,6 +4,33 @@
 	TODO : flood fill to check if the map is open
 	-UPDATE THE STRUCT WITH 2D MAP
 */
+//check the edges of the map
+int check_boundaries(char **map, size_t map_h)
+{
+	size_t i;
+	size_t j;
+	i = 0;
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(i == 0 || i == map_h - 1)
+			{
+				if(map[i][j] != '1' && map[i][j] != ' ')
+					return(false);
+			}
+			if(j == 0 || j == ft_strlen(map[i]) - 1)
+			{
+				if(map[i][j] != '1' && map[i][j] != ' ')
+					return(false);
+			}
+			j++;
+		}
+		i++;
+	}
+	return(true);
+}
 int line_processing(char *str, int *item)
 {
 	while (*str)
@@ -53,10 +80,11 @@ void free_arr(void **arr, int i)
 {
 	if(!arr)
 		return;
-	while (i >= 0)
+	i = 0;
+	while (arr[i])
 	{
 		free(arr[i]);
-		i--;
+		i++;
 	}
 	free(arr);
 }
@@ -90,7 +118,7 @@ int read_map(int fd, t_data *data)
 		read = get_next_line(fd);
 		j++;
 	}
-	if(!item)
+	if(!item || item > 1)
 	{
 		free(full);
 		close(fd);
@@ -108,7 +136,7 @@ int read_map(int fd, t_data *data)
 	data->map_x = find_longest_row(data->map);
 	get_player(data->map, &start_x, &start_y);
 	data->check_arr = 0;
-	if(bfs(start_y, start_x, data, j))
+	if(!check_boundaries(data->map, j) || bfs(start_x, start_y, data, j))
 	{
 		free_arr((void **)data->map, j);
 		free_arr((void **)data->check_arr, j);
