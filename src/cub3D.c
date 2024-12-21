@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/19 17:54:56 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:19:13 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int main(int argc, char **argv)
 {
     t_img_info minimap_img;
+    t_img_info frame;
     void *mlx;
     void *mlx_win;
-    t_player p;
     t_data data;
     if (argc != 2)
         return printf("Error\n");
@@ -37,13 +37,16 @@ int main(int argc, char **argv)
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
     minimap_img.img = mlx_new_image(mlx, minimap_img.img_width, minimap_img.img_height);
-
     minimap_img.addr = mlx_get_data_addr(minimap_img.img, &minimap_img.bits_per_pixel, &minimap_img.line_length, &minimap_img.endian);
+    frame.img_height = FRAME_HEIGHT;
+    frame.img_width = FRAME_WIDTH;
+    frame.img = mlx_new_image(mlx, frame.img_width, frame.img_height);
+    frame.addr = mlx_get_data_addr(frame.img, &frame.bits_per_pixel, &frame.line_length, &frame.endian);
     data.mlx = mlx;
     data.mlx_win = mlx_win;
     data.minimap_img = &minimap_img;
+    data.frame = &frame;
     data.map = map;
-    data.player = p;
     p_setup(&data.player, data.map);
     mlx_hook(mlx_win, ON_DESTROY, 0, close_win, &data);
     mlx_hook(mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);
