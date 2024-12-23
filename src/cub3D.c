@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:06:56 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:43:04 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int main(int argc, char **argv)
     map[4] = "11111";
     map[5] = NULL;
     intialize_data(&data, map, 0, 0);
+    init_weapon_names(&data);
+    init_weapons(&data);
     p_setup(&data.player, data.map);
     mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
     mlx_hook(data.mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);

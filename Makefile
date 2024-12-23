@@ -1,4 +1,4 @@
-CC = cc
+CC = clang
 CFLAGS = -I/usr/local/include -O3 -g3 -Wall -Wextra -Werror
 LDLIBS = -lmlx -lXext -lX11 -lm
 

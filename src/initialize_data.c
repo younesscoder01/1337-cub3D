@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:06:43 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/22 12:23:27 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,7 @@ void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win)
     data->frame = frame;
     data->map = map;
     data->game_frame = game_frame;
+    data->animate_weapon = false;
+    data->weapon_numb = 0;
+    data->frame_index = 0;
 }

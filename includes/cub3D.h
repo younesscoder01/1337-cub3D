@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:07:05 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/22 15:13:54 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <sys/time.h>
+#include <sys/wait.h>
 
-# define WINDOW_WIDTH 1080
-# define WINDOW_HEIGHT 720
+
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define FRAME_WIDTH (TILE_SIZE * 3)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
 # define TILE_SIZE (WINDOW_WIDTH / 12)
@@ -64,7 +69,18 @@ enum {
 	KEY_DOWN = 65364,
 	KEY_LEFT = 65361,
 	KEY_RIGHT = 65363,
-	ESC = 65307
+	ESC = 65307,
+	SPACE = 32,
+	ZERO = 48,
+	ONE = 49,
+	TWO = 50,
+	THREE = 51,
+	FOUR = 52,
+	FIVE = 53,
+	SIX = 54,
+	SEVEN = 55,
+	EIGHT = 56,
+	NINE = 57
 };
 
 //player struct
@@ -89,7 +105,15 @@ typedef struct	s_img_info {
 	int		endian;
     int img_height;
     int img_width;
+	char *filename;
 }				t_img_info;
+
+typedef struct s_weapons
+{
+	t_img_info **weapon;
+	int frame_numb;
+	int index_to_change;
+}               t_weapons;
 
 //data struct that containing all the data
 typedef struct  s_data
@@ -100,6 +124,11 @@ typedef struct  s_data
 	t_img_info *minimap_img;
 	t_img_info *frame;
     t_img_info *game_frame;
+	t_weapons	*all_weapons;
+	int frame_index;
+	char **weapon_names;
+	int weapon_numb;
+	bool animate_weapon;
 	char **map;
 }               t_data;
 
@@ -121,4 +150,11 @@ void p_setup(t_player *p, char **map);
 int get_player_x(char **map);
 int get_player_y(char **map);
 void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
+void init_weapon_names(t_data *data);
+void copy_img_sprite(t_img_info *src, t_img_info *dest, int x, int y, int height, int width);
+void copy_img(t_img_info *src, t_img_info *dest, int x, int y, int height, int width);
+void rect(t_img_info *img, int x, int y, int width, int height, int color);
+void floor_ceiling(t_img_info *img, int color1, int color2);
+void create_frame(t_data *data, int fx, int fy);
+void init_weapons(t_data *data);
 #endif
