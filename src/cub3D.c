@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:06:56 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/21 17:47:27 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 int main(int argc, char **argv)
 {
     t_data data;
+    
     if (argc != 2)
         return printf("Error\n");
     else
         printf("map name : %s\n", argv[1]);
-    char **map;
-    map = malloc(sizeof(char *) * 6);
-    map[0] = "11111";
-    map[1] = "10001";
-    map[2] = "10S01";
-    map[3] = "10001";
-    map[4] = "11111";
-    map[5] = NULL;
-    intialize_data(&data, map, 0, 0);
+ 
+    if(!setup(argc, argv, &data))
+    {
+        printf("false map\n");
+        return(1);
+    }
+    intialize_data(&data, data.map, 0, 0);
     p_setup(&data.player, data.map);
     mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
     mlx_hook(data.mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);

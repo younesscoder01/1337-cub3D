@@ -3,22 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:07:05 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/22 12:15:57 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+/*------------Libraries----------*/
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
 # include <mlx.h>
 # include <math.h>
+# include "../libft/libft.h"
 
+/*------------Macros-------------*/
+# define M_PI 3.14159265358979323846
 # define WINDOW_WIDTH 1080
 # define WINDOW_HEIGHT 720
 # define FRAME_WIDTH (TILE_SIZE * 3)
@@ -37,6 +42,7 @@
 # define BLUE 0x000000FF
 # define lfaa5ti 0x0044b6b7
 
+/*-------------Enums------------*/
 enum{
 	W = 180,
 	S = 90,
@@ -67,6 +73,15 @@ enum {
 	ESC = 65307
 };
 
+/*------------Structs------------*/
+//bfs sturct
+typedef struct node
+{
+        struct node     *next;
+        struct node     *parent;
+        int                     x;
+        int                     y;
+}                               t_node;
 //player struct
 typedef struct s_player
 {
@@ -94,16 +109,22 @@ typedef struct	s_img_info {
 //data struct that containing all the data
 typedef struct  s_data
 {
-    void	*mlx;
-    void	*mlx_win;
-	t_player player;
+    void		*mlx;
+    void		*mlx_win;
+	t_player	player;
+	int			**check_arr;
+	int 		map_x;
+	int 		map_y;
+	char *txt[4];
+	int color[2];
 	t_img_info *minimap_img;
 	t_img_info *frame;
     t_img_info *game_frame;
 	char **map;
 }               t_data;
 
-//fuctions
+/*------------Functions Prototypes--------------*/
+
 size_t get_map_width(char **map_name);
 size_t get_map_height(char **map_name);
 void render_minimap(t_data *data);
@@ -118,6 +139,11 @@ int key_r(int keycode, void *var);
 double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
+int setup(int argc, char **argv, t_data * d);
+int	bfs(int st_x, int st_y, t_data *d, int map_h);
+int	find_longest_row(char **map);
+void free_arr(void **arr, int i);
+void print_arr(int **arr, int max_r, int map_h);
 int get_player_x(char **map);
 int get_player_y(char **map);
 void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
