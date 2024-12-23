@@ -344,12 +344,12 @@ int setup(int argc, char **argv, t_data *d)
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
-	// if(read_textures_colors(d, fd))
-	// {
-	// 	close(fd);
-	// 	printf("false textures\n");
-	// 	return(false);
-	// }
+	if(read_textures_colors(d, fd))
+	{
+		close(fd);
+		printf("false textures\n");
+		return(false);
+	}
 	// print_config(d);
 	if(!read_map(fd, d))
 		return(false);
