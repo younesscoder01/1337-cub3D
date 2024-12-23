@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/23 13:18:07 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:34:57 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # define FRAME_WIDTH (TILE_SIZE * 3)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
 # define TILE_SIZE (WINDOW_WIDTH / 12)
-# define RADIUS (TILE_SIZE / 12)
+# define RADIUS (TILE_SIZE / 15)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
+# define ROTATION_SPEED 2.3
 
 
 //colors
@@ -40,7 +41,7 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
-# define lfaa5ti 0x0044b6b7
+# define LBAR9O9I 0x00532e12
 
 enum{
 	W = 180,
@@ -137,6 +138,8 @@ typedef struct  s_data
 	bool animate_weapon;
 	bool weapon_reload;
 	char **map;
+	int mouse_x;
+	int mouse_y;
 }               t_data;
 
 //fuctions
@@ -165,4 +168,6 @@ void floor_ceiling(t_img_info *img, int color1, int color2);
 void create_frame(t_data *data, int fx, int fy);
 void init_weapons(t_data *data);
 int render_bullets(t_data *data);
+int mouse_hook(int x, int y, t_data *data);
+int mouse_down(int button, int x, int y, t_data *data);
 #endif

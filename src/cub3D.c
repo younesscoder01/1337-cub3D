@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/23 13:18:22 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:34:09 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int argc, char **argv)
     map[3] = "10001";
     map[4] = "11111";
     map[5] = NULL;
+    data.mouse_x = 0;
     intialize_data(&data, map, 0, 0);
     init_weapon_names(&data);
     init_weapons(&data);
@@ -49,6 +50,8 @@ int main(int argc, char **argv)
     mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
     mlx_hook(data.mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);
     mlx_hook(data.mlx_win, ON_KEYUP, 1L << 1, key_r, &data);
+    mlx_hook(data.mlx_win, ON_MOUSEDOWN, 1L << 2, mouse_down, &data);
+    mlx_hook(data.mlx_win, ON_MOUSEMOVE, 1L << 6, mouse_hook, &data);
     mlx_loop_hook(data.mlx, render_next_frame, &data);
     mlx_loop(data.mlx);
     return (0);

@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/23 13:34:22 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:35:13 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int key_p(int keycode, void *data1)
         data->player.turnDirection = 1;
     else if (keycode == ESC)
         exit(1);
-    else if (keycode == SPACE)
+    else if (keycode == SPACE || keycode == 1)
     {
         data->animate_weapon = true;
         // data->frame_index = 0;
@@ -101,6 +101,10 @@ int key_p(int keycode, void *data1)
         data->weapon_numb = 3;
     else if (keycode == FOUR)
         data->weapon_numb = 4;
+    else if (keycode == FIVE)
+        data->weapon_numb = 5;
+    else if (keycode == SIX)
+        data->weapon_numb = 6;
     else if (keycode == R)
         data->weapon_reload = true;
     data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
@@ -124,6 +128,34 @@ int key_p(int keycode, void *data1)
         data->player.y = check_y;
     return 0;
 }
+
+
+
+int mouse_hook(int x, int y, t_data *data)
+{
+    (void)y;
+    if (data->mouse_x < x)
+        data->player.turnDirection = 1;
+    else if (data->mouse_x > x)
+        data->player.turnDirection = -1;
+    data->player.rotationAngle += data->player.turnDirection * ROTATION_SPEED;
+    data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
+    data->mouse_x = x;
+    data->player.turnDirection = 0;
+    return (0);
+}
+
+int mouse_down(int button, int x, int y, t_data *data)
+{
+    (void)x;
+    (void)y;
+    if (button == 1)
+    {
+        data->animate_weapon = true;
+    }
+    return (0);
+}
+
 
 int key_r(int keycode, void *var)
 {
@@ -196,7 +228,7 @@ void copy_img_sprite(t_img_info *src, t_img_info *dest, int x, int y, int height
         while (j < width)
         {
             color = get_px_color(src, xc, y);
-            if (color != 65535 && color != 592187)
+            if (color != 65535 && color != 592187 && color != -16777216)
                 ft_put_pixel(dest, j, i, color);
             xc++;
             j++;
@@ -238,10 +270,10 @@ void create_frame(t_data *data, int fx, int fy)
     else if (fy > data->minimap_img->img_height)
         fy = data->minimap_img->img_height - FRAME_HEIGHT;
     copy_img(data->minimap_img, data->frame, fx, fy, FRAME_HEIGHT, FRAME_WIDTH);
-    rect(data->frame, 0, 0, FRAME_WIDTH, 10, lfaa5ti);
-    rect(data->frame, 0, 0, 10, FRAME_WIDTH, lfaa5ti);
-    rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, lfaa5ti);
-    rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, lfaa5ti);
+    rect(data->frame, 0, 0, FRAME_WIDTH, 10, LBAR9O9I);
+    rect(data->frame, 0, 0, 10, FRAME_WIDTH, LBAR9O9I);
+    rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, LBAR9O9I);
+    rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, LBAR9O9I);
     // printf("frame width = %i\n", FRAME_WIDTH);
     // printf("frame height = %i\n", FRAME_HEIGHT);
     copy_img(data->frame, data->game_frame, 0, 0, FRAME_HEIGHT, FRAME_WIDTH);
@@ -278,13 +310,15 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
 
 void init_weapon_names(t_data *data)
 {
-    data->weapon_names = malloc(sizeof(char *) * 6);
+    data->weapon_names = malloc(sizeof(char *) * 8);
     data->weapon_names[0] = strdup("./textures/SPAR/SPAR01.xpm");
     data->weapon_names[1] = strdup("./textures/Rapr/Rapr01.xpm");
     data->weapon_names[2] = strdup("./textures/RPG7/RPG01.xpm");
     data->weapon_names[3] = strdup("./textures/Gr/Grena01.xpm");
     data->weapon_names[4] = strdup("./textures/Baton/Baton01.xpm");
-    data->weapon_names[5] = NULL;
+    data->weapon_names[5] = strdup("./textures/SabrinMK3/3Sab01.xpm");
+    data->weapon_names[6] = strdup("./textures/CA-MG/CAMG01.xpm");
+    data->weapon_names[7] = NULL;
 }
 
 void init_weapons(t_data *data)
@@ -294,7 +328,7 @@ void init_weapons(t_data *data)
     int k;
     char *filename;
 
-    data->all_weapons = malloc(sizeof(t_weapons) * 4);
+    data->all_weapons = malloc(sizeof(t_weapons) * 7);
     data->all_weapons[0].weapon = malloc(sizeof(t_img_info *) * 38);
     data->all_weapons[0].frame_numb = 38;
     data->all_weapons[0].index_to_change = 20;
@@ -325,9 +359,21 @@ void init_weapons(t_data *data)
     data->all_weapons[4].shoting_end = 8;
     data->all_weapons[4].ammo_numb = -1;
     data->all_weapons[4].default_ammo = -1;
+    data->all_weapons[5].weapon = malloc(sizeof(t_img_info *) * 39);
+    data->all_weapons[5].frame_numb = 39;
+    data->all_weapons[5].index_to_change = 25;
+    data->all_weapons[5].shoting_end = 5;
+    data->all_weapons[5].ammo_numb = 25;
+    data->all_weapons[5].default_ammo = 25;
+    data->all_weapons[6].weapon = malloc(sizeof(t_img_info *) * 33);
+    data->all_weapons[6].frame_numb = 33;
+    data->all_weapons[6].index_to_change = 21;
+    data->all_weapons[6].shoting_end = 5;
+    data->all_weapons[6].ammo_numb = 20;
+    data->all_weapons[6].default_ammo = 20;
     
     i = 0;
-    while(i < 5)
+    while(i < 7)
     {
         j = 0;
         k = 2;
