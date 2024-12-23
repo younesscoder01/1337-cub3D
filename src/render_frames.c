@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/22 18:44:30 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:34:22 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,86 +30,39 @@ double normalizeAngle(double angle)
     return angle;
 }
 
-// void animate_weapon(t_data *data)
-// {
-//     int i = 0;
-//     int counter;
-
-//     counter = 0;
-//     while (1)
-//     {
-//         if (i == 38)
-//             break;
-//         if (counter % (ANIMATION_DELAY * 10) == 0)
-//         {
-//             // render_minimap(data);
-//             // floor_ceiling(data->game_frame, BLUE, WHITE);
-//             // create_frame(data, 0, 0);
-//             // copy_img_sprite(data->SPAR[i], data->game_frame, 0, 0, data->SPAR[i]->img_height, data->SPAR[i]->img_width);
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar1\n");
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar2\n");
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar3\n");
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar4\n");    
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar5\n");
-//             mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[i]->img, 0, 0);
-//             printf("spar[%i] = %s\n", i, data->SPAR[i]->filename);
-//             printf("i = %i\n", i);
-//             i++;
-//         }
-//         counter++;
-//     }
-//     mlx_put_image_to_window(data->mlx, data->mlx_win, data->SPAR[0]->img, 0, 0);
-// }
-
-#include <sys/time.h>
-
-// void animate_weapon(t_data *data)
-// {
-//     printf("I am in\n");
-//     render_minimap(data);
-//     floor_ceiling(data->game_frame, BLUE, WHITE);
-//     create_frame(data, 0, 0);
-//     copy_img_sprite(data->SPAR[data->frame_index], data->game_frame, 0, 0, data->SPAR[data->frame_index]->img_height, data->SPAR[data->frame_index]->img_width);
-//     mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
-//     usleep(ANIMATION_DELAY);
-//     data->frame_index++;
-//     if (data->frame_index == 38)
-//         data->animate_weapon = false;
-//     data->frame_index = data->frame_index % 38;
-// }
-
 int set_up_animation_delay(int n_frame)
 {
     if (n_frame >= 38)
         return (40000);
-    else if (n_frame <= 25 && n_frame > 10)
+    else if (n_frame <= 25)
         return (80000);
-    else if (n_frame <= 10)
-        return (100000);
-    else
-    return 40000;
+    return (60000);
 }
 
-void animate_weapon(t_data *data)
+void animate_weapon_shoting(t_data *data, int end)
 {
     int animation_delay;
 
-    animation_delay = set_up_animation_delay(data->all_weapons[data->weapon_numb].frame_numb);
+    if (data->all_weapons[data->weapon_numb].ammo_numb == 0)
+    {
+        data->animate_weapon = false;
+        return;
+    }
+    animation_delay = set_up_animation_delay(end);
     render_minimap(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
     create_frame(data, 0, 0);
     copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_height, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_width);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
     usleep(animation_delay);
     data->frame_index++;
-    if (data->frame_index == data->all_weapons[data->weapon_numb].frame_numb)
+    if (data->frame_index == end)
+    {
         data->animate_weapon = false;
-    data->frame_index = data->frame_index % data->all_weapons[data->weapon_numb].frame_numb;
+        if (data->all_weapons[data->weapon_numb].ammo_numb != -1)
+            data->all_weapons[data->weapon_numb].ammo_numb--;
+    }
+    data->frame_index = data->frame_index % end;
 }
 
 
@@ -148,6 +101,8 @@ int key_p(int keycode, void *data1)
         data->weapon_numb = 3;
     else if (keycode == FOUR)
         data->weapon_numb = 4;
+    else if (keycode == R)
+        data->weapon_reload = true;
     data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     moveStep = data->player.walkDirection * data->player.moveSpeed;
@@ -241,7 +196,7 @@ void copy_img_sprite(t_img_info *src, t_img_info *dest, int x, int y, int height
         while (j < width)
         {
             color = get_px_color(src, xc, y);
-            if (color != 65535)
+            if (color != 65535 && color != 592187)
                 ft_put_pixel(dest, j, i, color);
             xc++;
             j++;
@@ -287,6 +242,8 @@ void create_frame(t_data *data, int fx, int fy)
     rect(data->frame, 0, 0, 10, FRAME_WIDTH, lfaa5ti);
     rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, lfaa5ti);
     rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, lfaa5ti);
+    // printf("frame width = %i\n", FRAME_WIDTH);
+    // printf("frame height = %i\n", FRAME_HEIGHT);
     copy_img(data->frame, data->game_frame, 0, 0, FRAME_HEIGHT, FRAME_WIDTH);
     // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
 }
@@ -341,18 +298,33 @@ void init_weapons(t_data *data)
     data->all_weapons[0].weapon = malloc(sizeof(t_img_info *) * 38);
     data->all_weapons[0].frame_numb = 38;
     data->all_weapons[0].index_to_change = 20;
+    data->all_weapons[0].shoting_end = 8;
+    data->all_weapons[0].ammo_numb = 20;
+    data->all_weapons[0].default_ammo = 20;
     data->all_weapons[1].weapon = malloc(sizeof(t_img_info *) * 24);
     data->all_weapons[1].frame_numb = 20;
     data->all_weapons[1].index_to_change = 20;
+    data->all_weapons[1].shoting_end = 6;
+    data->all_weapons[1].ammo_numb = 2;
+    data->all_weapons[1].default_ammo = 2;
     data->all_weapons[2].weapon = malloc(sizeof(t_img_info *) * 45);
     data->all_weapons[2].frame_numb = 45;
     data->all_weapons[2].index_to_change = 19;
+    data->all_weapons[2].shoting_end = 7;
+    data->all_weapons[2].ammo_numb = 1;
+    data->all_weapons[2].default_ammo = 1;
     data->all_weapons[3].weapon = malloc(sizeof(t_img_info *) * 17);
     data->all_weapons[3].frame_numb = 17;
     data->all_weapons[3].index_to_change = 19;
+    data->all_weapons[3].shoting_end = 17;
+    data->all_weapons[3].ammo_numb = -1;
+    data->all_weapons[3].default_ammo = -1;
     data->all_weapons[4].weapon = malloc(sizeof(t_img_info *) * 8);
     data->all_weapons[4].frame_numb = 8;
     data->all_weapons[4].index_to_change = 22;
+    data->all_weapons[4].shoting_end = 8;
+    data->all_weapons[4].ammo_numb = -1;
+    data->all_weapons[4].default_ammo = -1;
     
     i = 0;
     while(i < 5)
@@ -392,10 +364,55 @@ void init_weapons(t_data *data)
 
 void take_weapon(t_data *data)
 {
-    int w_numb;
+//     int w_numb;
 
-    w_numb = data->weapon_numb;
-    copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[w_numb], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[w_numb]->img_height, data->all_weapons[data->weapon_numb].weapon[w_numb]->img_width);
+//     w_numb = data->weapon_numb;
+    if (data->all_weapons[data->weapon_numb].ammo_numb == 0 && data->weapon_numb == 2)
+        copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[7], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[7]->img_height, data->all_weapons[data->weapon_numb].weapon[7]->img_width);
+    else
+        copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[0], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[0]->img_height, data->all_weapons[data->weapon_numb].weapon[0]->img_width);
+}
+
+void animate_weapon_reload(t_data *data, int last_end)
+{
+     int animation_delay;
+     int end;
+    // printf("ammo_numb = %i\n", data->all_weapons[data->weapon_numb].ammo_numb);
+    end = data->all_weapons[data->weapon_numb].frame_numb;
+    if (data->all_weapons[data->weapon_numb].ammo_numb == data->all_weapons[data->weapon_numb].default_ammo || data->all_weapons[data->weapon_numb].ammo_numb == -1)
+    {
+        data->weapon_reload = false;
+        return;
+    }
+    animation_delay = set_up_animation_delay(end - last_end);
+    render_minimap(data);
+    floor_ceiling(data->game_frame, BLUE, WHITE);
+    create_frame(data, 0, 0);
+    copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end], data->game_frame, 0, 0,\
+                     data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end]->img_height, \
+                    data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end]->img_width);
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    usleep(animation_delay);
+    data->frame_index++;
+    if (data->frame_index + last_end == end)
+    {
+        data->weapon_reload = false;
+        // printf("ammo_numb = %i\n", data->all_weapons[data->weapon_numb].ammo_numb);
+        data->all_weapons[data->weapon_numb].ammo_numb = data->all_weapons[data->weapon_numb].default_ammo;
+        // printf("ammo_numb = %i\n", data->all_weapons[data->weapon_numb].ammo_numb);
+        // printf("default_ammo = %i\n", data->all_weapons[data->weapon_numb].default_ammo);
+        data->frame_index = 0;
+    }
+}
+
+
+int render_bullets(t_data *data)
+{
+    if (data->all_weapons[data->weapon_numb].ammo_numb == 0)
+        copy_img_sprite(data->no_bullet, data->game_frame, 0, 0, data->no_bullet->img_height, data->no_bullet->img_width);
+    else
+        copy_img_sprite(data->bullet, data->game_frame, 0, 0, data->bullet->img_height, data->bullet->img_width);
+    return 0;
 }
 
 int render_next_frame(void *data1)
@@ -407,12 +424,17 @@ int render_next_frame(void *data1)
     floor_ceiling(data->game_frame, BLUE, WHITE);
     create_frame(data, 0, 0);
     take_weapon(data);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
-    printf("data animate weapon = %i\n", data->animate_weapon);
-    if (data->animate_weapon )
-        animate_weapon(data);
+    // printf("data animate weapon = %i\n", data->animate_weapon);
+    if (data->animate_weapon)
+        animate_weapon_shoting(data, data->all_weapons[data->weapon_numb].shoting_end);
+    if (data->weapon_reload)
+        animate_weapon_reload(data, data->all_weapons[data->weapon_numb].shoting_end);
     // printf("player x: %i\nplayer y: %i\n", data->player.x, data->player.y);
+    render_bullets(data);
     //TODO=rays calculation
+
+    //put the image to the window
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
     
     return 0;
 }

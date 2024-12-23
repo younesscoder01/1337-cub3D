@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/22 15:13:54 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:18:07 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ enum {
 	SIX = 54,
 	SEVEN = 55,
 	EIGHT = 56,
-	NINE = 57
+	NINE = 57,
+	R = 114
 };
 
 //player struct
@@ -113,6 +114,9 @@ typedef struct s_weapons
 	t_img_info **weapon;
 	int frame_numb;
 	int index_to_change;
+	int shoting_end;
+	int ammo_numb;
+	int default_ammo;
 }               t_weapons;
 
 //data struct that containing all the data
@@ -124,11 +128,14 @@ typedef struct  s_data
 	t_img_info *minimap_img;
 	t_img_info *frame;
     t_img_info *game_frame;
+	t_img_info *bullet;
+	t_img_info *no_bullet;
 	t_weapons	*all_weapons;
-	int frame_index;
+	int	frame_index;
+	int	weapon_numb;
 	char **weapon_names;
-	int weapon_numb;
 	bool animate_weapon;
+	bool weapon_reload;
 	char **map;
 }               t_data;
 
@@ -157,4 +164,5 @@ void rect(t_img_info *img, int x, int y, int width, int height, int color);
 void floor_ceiling(t_img_info *img, int color1, int color2);
 void create_frame(t_data *data, int fx, int fy);
 void init_weapons(t_data *data);
+int render_bullets(t_data *data);
 #endif
