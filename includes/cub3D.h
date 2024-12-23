@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 16:46:24 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/22 12:15:57 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ typedef struct  s_data
 	int			**check_arr;
 	int 		map_x;
 	int 		map_y;
+	char *txt[4];
+	int color[2];
 	t_img_info *minimap_img;
 	t_img_info *frame;
     t_img_info *game_frame;

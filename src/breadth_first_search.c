@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:30:24 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/21 16:23:49 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:26:15 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	neighbors(t_node **queue, t_node *cur, t_data *d, int **vis)
 
 	x = cur->x;
 	y = cur->y;
-	
 	if(!x || !y || x == d->map_y -1 || y == d->map_x -1  ||d->map[x][y] == ' ')
 	{
 		printf("x = %d, y = %d\n", x, y);
@@ -193,13 +192,13 @@ int	bfs(int st_x, int st_y, t_data *d, int map_h)
 		// sleep(1);
 		if(neighbors(&queue, queue, d, arr))
 		{
-			print_arr(arr, d->map_x, map_h);
 			free_queue(queue);
 			d->check_arr = arr;
 			return(EXIT_FAILURE);
 		}
 		dequeue(&queue, queue);
 	}
+	print_arr(arr, d->map_x, map_h);
 	d->check_arr = arr;
 	return (EXIT_SUCCESS);
 }
