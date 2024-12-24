@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -I/usr/local/include -O3 -g3 -Wall -Wextra -Werror -g -fsanitize=address
 LDLIBS = -lmlx -lXext -lX11 -lm
-LIB = libft/libft.a libmlx_Linux.a
+LIB = libft/libft.a #libmlx_Linux.a
 LIB_DIR = libft
 SRCDIR = ./src
 OBJDIR = ./obj

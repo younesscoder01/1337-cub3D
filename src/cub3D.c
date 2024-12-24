@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:39:42 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:18:46 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,12 @@ int main(int argc, char **argv)
         return(1);
     }
     data.mouse_x = 0;
-    intialize_data(&data, map, 0, 0);
+    //print the map
+    for (int i = 0; data.map[i]; i++)
+    {
+        printf("%s\n", data.map[i]);
+    }
+    intialize_data(&data, data.map, 0, 0);
     init_weapon_names(&data);
     init_weapons(&data);
     p_setup(&data.player, data.map);
@@ -50,7 +55,7 @@ int main(int argc, char **argv)
     mlx_hook(data.mlx_win, ON_KEYUP, 1L << 1, key_r, &data);
     mlx_hook(data.mlx_win, ON_MOUSEDOWN, 1L << 2, mouse_down, &data);
     mlx_hook(data.mlx_win, ON_MOUSEMOVE, 1L << 6, mouse_hook, &data);
-    mlx_loop_hook(data.mlx, render_next_frame, &data);
+    mlx_loop_hook(data.mlx, update, &data);
     mlx_loop(data.mlx);
     return (0);
 }

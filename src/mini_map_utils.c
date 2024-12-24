@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:29:13 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:23:25 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:21:20 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void render_wall(char **map, t_img_info *img)
         i[1] = 0;
         while (map[i[0]][i[1]])
         {
-            if (map[i[0]][i[1]] == '1')
+            if (map[i[0]][i[1]] == '1' || map[i[0]][i[1]] == ' ')
                 render_tiles(img, i[1] * TILE_SIZE, i[0] * TILE_SIZE, BLACK);
             i[1]++;
         }

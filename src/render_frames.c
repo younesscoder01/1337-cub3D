@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:23:35 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:18:39 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
     }
 }
 
-int render_next_frame(void *data1)
+int update(void *data1)
 {
     t_data *data;
 

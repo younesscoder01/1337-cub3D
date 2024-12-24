@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:52:32 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:19:19 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void render_tiles(t_img_info *img, int x, int y, int color);
 void render_wall(char **map, t_img_info *img);
 void render_floor(char **map, t_img_info *img);
 void ft_put_pixel(t_img_info *img, int x, int y, int color);
-int render_next_frame(void *data);
+int update(void *data1);
 int close_win(void *data1);
 int key_p(int keycode, void *data1);
 int key_r(int keycode, void *var);
