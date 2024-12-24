@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:29:13 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/20 18:01:27 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:23:25 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,23 @@ void render_floor(char **map, t_img_info *img)
             i[1]++;
         }
         i[0]++;
+    }
+}
+
+void rect(t_img_info *img, int x, int y, int width, int height, int color)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < height)
+    {
+        j = 0;
+        while (j < width)
+        {
+            ft_put_pixel(img, x + j, y + i, color);
+            j++;
+        }
+        i++;
     }
 }
