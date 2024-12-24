@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 11:21:31 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:39:02 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ double normalizeAngle(double angle)
 int key_p(int keycode, void *data1)
 {
     t_data *data;
-    double moveStep;
-    int check_x;
-    int check_y;
 
     printf("keycode = %i\n", keycode);
     data = (t_data *)data1;
-    if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_A)
+    if (keycode == KEY_A || keycode == KEY_D)
+        data->player.is_move_side = 1;
+    if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_D)
         data->player.walkDirection = 1;
-    else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_D)
+    else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_A)
         data->player.walkDirection = -1;
     else if (keycode == KEY_LEFT)
         data->player.turnDirection = -1;
@@ -60,23 +59,16 @@ int key_p(int keycode, void *data1)
         data->weapon_reload = true;
     data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
-    moveStep = data->player.walkDirection * data->player.moveSpeed;
-    if (keycode == KEY_A || keycode == KEY_D)
-    {
-        check_x = data->player.x - round(cos(deg2rad(data->player.rotationAngle + 90)) * moveStep);
-        check_y = data->player.y - round(sin(deg2rad(data->player.rotationAngle + 90)) * moveStep);
-    }
-    else
-    {
-        check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle)) * moveStep);
-        check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle)) * moveStep);
-    }
-    printf("walkDirection: %f\n", data->player.walkDirection);
-    printf("rotationAngle: %f\n", data->player.rotationAngle);
-    if (data->map[data->player.y / TILE_SIZE][check_x / TILE_SIZE] != '1')
-        data->player.x = check_x;
-    if (data->map[check_y / TILE_SIZE][data->player.x / TILE_SIZE] != '1')
-        data->player.y = check_y;
+    // if (keycode == KEY_A || keycode == KEY_D)
+    // {
+    //     check_x = data->player.x - round(cos(deg2rad(data->player.rotationAngle + 90)) * moveStep);
+    //     check_y = data->player.y - round(sin(deg2rad(data->player.rotationAngle + 90)) * moveStep);
+    // }
+    // else
+    // {
+    //     check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle)) * moveStep);
+    //     check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle)) * moveStep);
+    // }
     return 0;
 }
 
@@ -85,16 +77,24 @@ int key_r(int keycode, void *var)
     t_data *data;
 
     data = (t_data *)var;
-    if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_A)
+    if (keycode == KEY_W)
         data->player.walkDirection = 0;
-    else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_D)
+    else if (keycode == KEY_UP)
+        data->player.walkDirection = 0;
+    else if (keycode == KEY_A)
+        data->player.walkDirection = 0;
+    else if (keycode == KEY_S)
+        data->player.walkDirection = 0;
+    else if (keycode == KEY_DOWN)
+        data->player.walkDirection = 0;
+    else if (keycode == KEY_D)
         data->player.walkDirection = 0;
     else if (keycode == KEY_LEFT)
         data->player.turnDirection = 0;
     else if (keycode == KEY_RIGHT)
         data->player.turnDirection = 0;
-    // else if (keycode == SPACE)
-    //     data->animate_weapon = false;
+    if (keycode == KEY_A || keycode == KEY_D)
+        data->player.is_move_side = 0;
     return 0;
 }
 
@@ -105,9 +105,10 @@ int mouse_hook(int x, int y, t_data *data)
         data->player.turnDirection = 1;
     else if (data->mouse_x > x)
         data->player.turnDirection = -1;
-    data->player.rotationAngle += data->player.turnDirection * ROTATION_SPEED;
+    data->player.rotationAngle += data->player.turnDirection * MOVE_SPEED_MOUSE;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     data->mouse_x = x;
+    printf("turnDirection = %f\n", data->player.turnDirection);
     data->player.turnDirection = 0;
     return (0);
 }
@@ -117,8 +118,6 @@ int mouse_down(int button, int x, int y, t_data *data)
     (void)x;
     (void)y;
     if (button == 1)
-    {
         data->animate_weapon = true;
-    }
     return (0);
 }

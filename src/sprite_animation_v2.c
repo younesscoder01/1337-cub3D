@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:15:41 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:26:43 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:06:07 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void take_weapon(t_data *data)
 int set_up_animation_delay(int n_frame)
 {
     if (n_frame >= 38)
-        return (40000);
+        return (30000);
     else if (n_frame <= 25)
-        return (80000);
-    return (60000);
+        return (60000);
+    return (40000);
 }
 
 void animate_weapon_shoting(t_data *data, int end)

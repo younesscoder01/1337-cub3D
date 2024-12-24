@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 12:18:39 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:28:38 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,29 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
     }
 }
 
+void movement_update(t_data *data)
+{
+    int check_x;
+    int check_y;
+    double moveStep;
+
+    moveStep = data->player.walkDirection * data->player.moveSpeed;
+    check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
+    check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
+    // printf("walkDirection: %f\n", data->player.walkDirection);
+    // printf("rotationAngle: %f\n", data->player.rotationAngle);
+    if (data->map[data->player.y / TILE_SIZE][check_x / TILE_SIZE] != '1')
+        data->player.x = check_x;
+    if (data->map[check_y / TILE_SIZE][data->player.x / TILE_SIZE] != '1')
+        data->player.y = check_y;
+}
+
 int update(void *data1)
 {
     t_data *data;
 
     data = (t_data *)data1;
+    movement_update(data);
     render_minimap(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
     create_frame(data, 0, 0);

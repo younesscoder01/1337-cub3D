@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:24:42 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:25:36 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:31:48 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,11 @@ void p_setup(t_player *p, char **map)
     p->turnDirection = 0;
     p->walkDirection = 0;
     p->rotationAngle = get_player_angle(map);
-    p->moveSpeed = 6.0;
+    p->moveSpeed = MOVE_SPEED;
     p->rotationSpeed = ROTATION_SPEED + 5.5;
     p->x = (get_player_x(map) * TILE_SIZE) + TILE_SIZE / 2;
     p->y = (get_player_y(map) * TILE_SIZE) + TILE_SIZE / 2;
+    // p->is_move_side = false;
 }
 
 void draw_line(double x, double y, double x1, double y1, t_img_info *img, int color)

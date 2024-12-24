@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 11:35:39 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:53:56 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,27 @@ void init_weapons(t_data *data)
     char *filename;
 
     data->all_weapons = malloc(sizeof(t_weapons) * WEAPON_N);
-    data->all_weapons[0].weapon = malloc(sizeof(t_img_info *) * 38);
-    data->all_weapons[0].frame_numb = 38;
-    data->all_weapons[0].index_to_change = 20;
-    data->all_weapons[0].shoting_end = 8;
-    data->all_weapons[0].ammo_numb = 20;
-    data->all_weapons[0].default_ammo = 20;
-    data->all_weapons[1].weapon = malloc(sizeof(t_img_info *) * 24);
-    data->all_weapons[1].frame_numb = 20;
-    data->all_weapons[1].index_to_change = 20;
-    data->all_weapons[1].shoting_end = 6;
-    data->all_weapons[1].ammo_numb = 2;
-    data->all_weapons[1].default_ammo = 2;
-    data->all_weapons[2].weapon = malloc(sizeof(t_img_info *) * 45);
-    data->all_weapons[2].frame_numb = 45;
-    data->all_weapons[2].index_to_change = 19;
-    data->all_weapons[2].shoting_end = 7;
-    data->all_weapons[2].ammo_numb = 1;
-    data->all_weapons[2].default_ammo = 1;
-    data->all_weapons[3].weapon = malloc(sizeof(t_img_info *) * 17);
-    data->all_weapons[3].frame_numb = 17;
-    data->all_weapons[3].index_to_change = 19;
-    data->all_weapons[3].shoting_end = 17;
-    data->all_weapons[3].ammo_numb = -1;
-    data->all_weapons[3].default_ammo = -1;
-    data->all_weapons[4].weapon = malloc(sizeof(t_img_info *) * 8);
-    data->all_weapons[4].frame_numb = 8;
-    data->all_weapons[4].index_to_change = 22;
-    data->all_weapons[4].shoting_end = 8;
-    data->all_weapons[4].ammo_numb = -1;
-    data->all_weapons[4].default_ammo = -1;
-    data->all_weapons[5].weapon = malloc(sizeof(t_img_info *) * 39);
-    data->all_weapons[5].frame_numb = 39;
-    data->all_weapons[5].index_to_change = 25;
-    data->all_weapons[5].shoting_end = 5;
-    data->all_weapons[5].ammo_numb = 25;
-    data->all_weapons[5].default_ammo = 25;
-    data->all_weapons[6].weapon = malloc(sizeof(t_img_info *) * 33);
-    data->all_weapons[6].frame_numb = 33;
-    data->all_weapons[6].index_to_change = 21;
-    data->all_weapons[6].shoting_end = 5;
-    data->all_weapons[6].ammo_numb = 20;
-    data->all_weapons[6].default_ammo = 20;
+    data->all_weapons[0] = (t_weapons){.ammo_numb = 20, .default_ammo = 20,
+        .frame_numb = 38, .index_to_change = 20, .shoting_end = 8,
+        .weapon = malloc(sizeof(t_img_info *) * 38)};
+    data->all_weapons[1] = (t_weapons){.ammo_numb = 2, .default_ammo = 2,
+        .frame_numb = 24, .index_to_change = 20, .shoting_end = 6,
+        .weapon = malloc(sizeof(t_img_info *) * 24)};
+    data->all_weapons[2] = (t_weapons){.ammo_numb = 1, .default_ammo = 1,
+        .frame_numb = 45, .index_to_change = 19, .shoting_end = 7,
+        .weapon = malloc(sizeof(t_img_info *) * 45)};
+    data->all_weapons[3] = (t_weapons){.ammo_numb = -1, .default_ammo = -1,
+        .frame_numb = 17, .index_to_change = 19, .shoting_end = 17,
+        .weapon = malloc(sizeof(t_img_info *) * 17)};
+    data->all_weapons[4] = (t_weapons){.ammo_numb = -1, .default_ammo = -1,
+        .frame_numb = 8, .index_to_change = 22, .shoting_end = 8,
+        .weapon = malloc(sizeof(t_img_info *) * 8)};
+    data->all_weapons[5] = (t_weapons){.ammo_numb = 25, .default_ammo = 25,
+        .frame_numb = 39, .index_to_change = 25, .shoting_end = 5,
+        .weapon = malloc(sizeof(t_img_info *) * 39)};
+    data->all_weapons[6] = (t_weapons){.ammo_numb = 20, .default_ammo = 20,
+        .frame_numb = 33, .index_to_change = 21, .shoting_end = 5,
+        .weapon = malloc(sizeof(t_img_info *) * 33)};
     
     i = 0;
     while(i < WEAPON_N)
