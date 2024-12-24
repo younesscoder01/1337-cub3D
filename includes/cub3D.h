@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/23 18:34:57 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:28:09 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,16 @@ void floor_ceiling(t_img_info *img, int color1, int color2);
 void create_frame(t_data *data, int fx, int fy);
 void init_weapons(t_data *data);
 int render_bullets(t_data *data);
+int mouse_hook(int x, int y, t_data *data);
+int mouse_down(int button, int x, int y, t_data *data);
+void draw_line(double x, double y, double x1, double y1, t_img_info *img, int color);
+void take_weapon(t_data *data);
+int set_up_animation_delay(int n_frame);
+void animate_weapon_shoting(t_data *data, int end);
+void animate_weapon_reload(t_data *data, int last_end);
+double normalizeAngle(double angle);
+int key_p(int keycode, void *data1);
+int key_r(int keycode, void *var);
 int mouse_hook(int x, int y, t_data *data);
 int mouse_down(int button, int x, int y, t_data *data);
 #endif
