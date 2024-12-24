@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
 /*   Updated: 2024/12/24 11:35:39 by ysahraou         ###   ########.fr       */
@@ -40,7 +40,6 @@ void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win)
     data->mlx_win = mlx_win;
     data->minimap_img = minimap_img;
     data->frame = frame;
-    data->map = map;
     data->game_frame = game_frame;
     data->animate_weapon = false;
     data->weapon_numb = 0;

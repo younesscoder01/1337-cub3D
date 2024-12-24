@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
 /*   Updated: 2024/12/24 10:39:42 by ysahraou         ###   ########.fr       */
@@ -29,18 +29,16 @@ void init_bullet(t_data *data)
 int main(int argc, char **argv)
 {
     t_data data;
+    
     if (argc != 2)
-        return printf("Error\n");
+        return printf("Error There is no map\n");
     else
         printf("map name : %s\n", argv[1]);
-    char **map;
-    map = malloc(sizeof(char *) * 6);
-    map[0] = "11111";
-    map[1] = "10001";
-    map[2] = "10S01";
-    map[3] = "10001";
-    map[4] = "11111";
-    map[5] = NULL;
+    if(!setup(argc, argv, &data))
+    {
+        printf("false map\n");
+        return(1);
+    }
     data.mouse_x = 0;
     intialize_data(&data, map, 0, 0);
     init_weapon_names(&data);
