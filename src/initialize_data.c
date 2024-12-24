@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:15:02 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:52:51 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void init_weapons(t_data *data)
     int k;
     char *filename;
 
-    data->all_weapons = malloc(sizeof(t_weapons) * 7);
+    data->all_weapons = malloc(sizeof(t_weapons) * WEAPON_N);
     data->all_weapons[0].weapon = malloc(sizeof(t_img_info *) * 38);
     data->all_weapons[0].frame_numb = 38;
     data->all_weapons[0].index_to_change = 20;
@@ -111,9 +111,10 @@ void init_weapons(t_data *data)
     data->all_weapons[6].shoting_end = 5;
     data->all_weapons[6].ammo_numb = 20;
     data->all_weapons[6].default_ammo = 20;
+    data->all_weapons[7].weapon = NULL;
     
     i = 0;
-    while(i < 7)
+    while(i < WEAPON_N)
     {
         j = 0;
         k = 2;

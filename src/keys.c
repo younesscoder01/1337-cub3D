@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:22:23 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 11:21:31 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,9 @@ int key_p(int keycode, void *data1)
     else if (keycode == KEY_RIGHT)
         data->player.turnDirection = 1;
     else if (keycode == ESC)
-        exit(1);
+        close_win(data);
     else if (keycode == SPACE || keycode == 1)
-    {
         data->animate_weapon = true;
-        // data->frame_index = 0;
-    }
     if (keycode == ZERO)
         data->weapon_numb = 0;
     else if (keycode == ONE)

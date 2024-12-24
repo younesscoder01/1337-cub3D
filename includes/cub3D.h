@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 10:28:09 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 10:52:32 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
 # define ROTATION_SPEED 2.3
+# define WEAPON_N 7
 
 
 //colors
