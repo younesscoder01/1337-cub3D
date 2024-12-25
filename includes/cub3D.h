@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 10:05:03 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:15:46 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define WINDOW_HEIGHT 600
 # define FRAME_WIDTH (TILE_SIZE * 3)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
-# define TILE_SIZE 46//(WINDOW_WIDTH / 12)
+# define TILE_SIZE (WINDOW_WIDTH / 12)
 # define RADIUS (TILE_SIZE / 12)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
