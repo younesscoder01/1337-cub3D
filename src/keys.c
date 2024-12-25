@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 14:39:02 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:58:01 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 double normalizeAngle(double angle)
 {
-    while (angle < 0)
+    while (angle < 0.0000)
         angle += 360;
-    while (angle >= 360)
+    while (angle >= 360.0)
         angle -= 360;
     return angle;
 }

@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 10:22:27 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:53:14 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,12 @@ int read_map(int fd, t_data *data)
 	}
 
 	data->map = ft_split(full, '\n');
+	//printf map with number of columns
+	// for (int i = 0; data->map[i]; i++)
+	// {
+	// 	printf("map[%d] = %s\n", i, data->map[i]);
+	// }
+	// exit(1);
 	free(full);
 	int start_x;
 	int start_y;
@@ -213,7 +219,7 @@ int read_map(int fd, t_data *data)
 	data->map_y = j;
 	data->map_x = find_longest_row(data->map);
 	get_player(data->map, &start_y, &start_x);
-	printf("start_x = %d start_y = %d\n", start_x, start_y);
+	// printf("start_x = %d start_y = %d\n", start_x, start_y);
 	//change bfs to function that check each cell and look in all directions if it is open
 	if(!check_map(data->map))
 	{

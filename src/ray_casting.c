@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 10:08:19 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:19:42 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 
 int	is_wall(float x, float y, char **map, t_data *data)
 {
-	if(x < 0 || y < 0 || y > data->minimap_img->img_height || x > data->minimap_img->img_width)
+	if(x < 0 || y < 0 || (int)y >= data->minimap_img->img_height  || (int)x >= data->minimap_img->img_width)
 		return(1);
 	int map_grid_x;
 	int map_grid_y;
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
-
+	// printf("segfault x: %f y: %f\n", x, y);
+	// printf("mini_map_width: %d mini_map_height: %d\n", data->minimap_img->img_width, data->minimap_img->img_height);
+	// printf("segfault map_grid_x: %d\n", map_grid_x);
+	// printf("segfault map_grid_y: %d\n", map_grid_y);
+	if(ft_strlen(map[map_grid_y]) < (size_t)map_grid_x)
+		return(1);
 	return(map[map_grid_y][map_grid_x] == '1');
 }
 void calc_rays(t_data *data)
@@ -163,6 +168,6 @@ void calc_rays(t_data *data)
 		
 		}
 		printf("%f\n", ray_angle);
-		ray_angle += (double)FOV / data->minimap_img->img_width;
+		ray_angle += (double)FOV / (double)data->minimap_img->img_width;
 	}
 }

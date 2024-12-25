@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 14:53:56 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:41:34 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win)
     game_frame = malloc(sizeof(t_img_info));
     minimap_img->img_height =  get_map_height(map) * TILE_SIZE;
     minimap_img->img_width = get_map_width(map) * TILE_SIZE;
+    printf("get map height = %li\nget map width = %li\n", get_map_height(map), get_map_width(map));
+    // exit(0);
     printf("height = %i\nwidth = %i\n", minimap_img->img_height, minimap_img->img_width);
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
