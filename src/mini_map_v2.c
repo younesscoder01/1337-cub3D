@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map_v2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:24:42 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 13:31:48 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:27:30 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void p_setup(t_player *p, char **map)
     // p->is_move_side = false;
 }
 
-void draw_line(double x, double y, double x1, double y1, t_img_info *img, int color)
+void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color)
 {
     double dx;
     double dy;

@@ -1,14 +1,15 @@
 CC = cc
 CFLAGS = -I/usr/local/include -O3 -g3 -Wall -Wextra -Werror -g -fsanitize=address
-LDLIBS = -lmlx -lXext -lX11 -lm
-LIB = libft/libft.a #libmlx_Linux.a
+LDLIBS = -lXext -lX11 -lm #-lmlx
+LIB = libft/libft.a libmlx_Linux.a
 LIB_DIR = libft
 SRCDIR = ./src
 OBJDIR = ./obj
 SRC = ./src/cub3D.c ./src/mini_map.c ./src/mini_map_utils.c ./src/render_frames.c \
 		./src/initialize_data.c ./src/close_err_handling.c ./src/sprite_animation.c \
 		./src/sprite_animation_v2.c ./src/keys.c \
-		./src/mini_map_v2.c ./src/breadth_first_search.c ./src/parser.c
+		./src/mini_map_v2.c  ./src/parser.c \
+		./src/ray_casting.c ./src/math_utils.c 
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 NAME = cub3D
 

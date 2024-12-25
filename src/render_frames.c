@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 14:28:38 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:24:17 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int update(void *data1)
     data = (t_data *)data1;
     movement_update(data);
     render_minimap(data);
+    calc_rays(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
     create_frame(data, 0, 0);
     take_weapon(data);

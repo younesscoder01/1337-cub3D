@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 14:50:51 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:27:16 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@
 # include "../libft/libft.h"
 
 /*------------Macros-------------*/
+# define WALL_STRIP_WIDTH 1
+# define FOV 60
+# define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define FRAME_WIDTH (TILE_SIZE * 3)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
 # define TILE_SIZE (WINDOW_WIDTH / 12)
@@ -95,14 +100,20 @@ enum {
 };
 
 /*------------Structs------------*/
-//bfs sturct
-typedef struct node
+//ray struct
+typedef struct s_ray
 {
-        struct node     *next;
-        struct node     *parent;
-        int                     x;
-        int                     y;
-}                               t_node;
+	double	angle;
+	int		column_id;
+	float	hit_x;
+	float	hit_y;
+	double	distance;
+	bool	dir_hit;
+	bool	is_down;
+	bool	is_up;
+	bool	is_right;
+	bool	is_left;
+}				t_rays[NUM_RAYS];
 //player struct
 typedef struct s_player
 {
@@ -144,6 +155,7 @@ typedef struct  s_data
 {
     void		*mlx;
     void		*mlx_win;
+	t_rays		rays;
 	t_player	player;
 	int			**check_arr;
 	int 		map_x;
@@ -200,7 +212,6 @@ void init_weapons(t_data *data);
 int render_bullets(t_data *data);
 int mouse_hook(int x, int y, t_data *data);
 int mouse_down(int button, int x, int y, t_data *data);
-void draw_line(double x, double y, double x1, double y1, t_img_info *img, int color);
 void take_weapon(t_data *data);
 int set_up_animation_delay(int n_frame);
 void animate_weapon_shoting(t_data *data, int end);
@@ -210,4 +221,22 @@ int key_p(int keycode, void *data1);
 int key_r(int keycode, void *var);
 int mouse_hook(int x, int y, t_data *data);
 int mouse_down(int button, int x, int y, t_data *data);
+void draw_line_angle(t_data *data, double angle, int x, int y);
+void draw_line(t_data *data, int x, int y, int x1, int y1);
+double calc_dist(long x, long x1, long y , long y1);
+double rad2deg(double angle);
+double norm_angle(double angle);
+void draw_circle(t_data *data, double cx, double cy, float radius);
+void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color);
+void calc_rays(t_data *data);
+
+
+
+
+
+
+
+
+
+
 #endif
