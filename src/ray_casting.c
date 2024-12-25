@@ -6,13 +6,19 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 13:05:10 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:55:27 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-int	is_wall(float x, float y, char **map, t_data *data)
+double distance(int x1, int y1, int x2, int y2)
+{
+    return sqrt(pow(x2 - x1, 2)
+                + pow(y2 - y1, 2) * 1.0);
+}
+
+int	is_wall(float x, float y, char **map, t_data *data, int mod)
 {
 	if(x < 0 || y < 0 || (int)y >= data->minimap_img->img_height  || (int)x >= data->minimap_img->img_width)
 		return(1);
@@ -22,14 +28,26 @@ int	is_wall(float x, float y, char **map, t_data *data)
 	map_grid_y = floor(y / TILE_SIZE);
 	if(ft_strlen(map[map_grid_y]) < (size_t)map_grid_x)
 		return(1);
-	return(map[map_grid_y][map_grid_x] == '1' || map[map_grid_y][map_grid_x] == 'D');
+    if (map[map_grid_y][map_grid_x] == 'D' && distance(data->player.x, data->player.y, x, y) <= TILE_SIZE * 2 && mod == 1)
+    {
+        printf("You Win\n");
+        if (map_grid_x == data->player.x / TILE_SIZE || map_grid_y == data->player.y / TILE_SIZE)
+        {
+            if (map_grid_x + 1 == data->player.x / TILE_SIZE)
+                return(0);
+            if (map_grid_x - 1 == data->player.x / TILE_SIZE)
+                return(0);
+            if (map_grid_y + 1 == data->player.y / TILE_SIZE)
+                return(0);
+            if (map_grid_y - 1 == data->player.y / TILE_SIZE)
+                return(0);
+        }
+        else 
+            return(1);
+    }
+    return(map[map_grid_y][map_grid_x] == '1' || map[map_grid_y][map_grid_x] == 'D');
 }
 
-double distance(int x1, int y1, int x2, int y2)
-{
-    return sqrt(pow(x2 - x1, 2)
-                + pow(y2 - y1, 2) * 1.0);
-}
 
 
 void castAllrays(t_data *param)
@@ -91,7 +109,7 @@ void castAllrays(t_data *param)
         while (xintercept >= 0 && xintercept < param->minimap_img->img_width \
                 && yintercept >= 0 && yintercept < param->minimap_img->img_height)
         {
-            if(is_wall(xintercept, yintercept - py, param->map, param))
+            if(is_wall(xintercept, yintercept - py, param->map, param, 1))
 			{
                 foundHwallhit = 1;
                 Hhitx = xintercept;
@@ -121,7 +139,7 @@ void castAllrays(t_data *param)
         while (xintercept >= 0 && xintercept < param->minimap_img->img_width \
                 && yintercept >= 0 && yintercept < param->minimap_img->img_height)
         {
-			if(is_wall(xintercept - px, yintercept , param->map, param))
+			if(is_wall(xintercept - px, yintercept , param->map, param, 1))
             {
                 foundVwallhit = 1;
                 Vhitx = xintercept - px;
@@ -144,9 +162,6 @@ void castAllrays(t_data *param)
         
         if (Hdistance < Vdistance)
         {
-			if (Hdistance == 15 && param->map[(int)Hhity / TILE_SIZE][(int)Hhitx / TILE_SIZE] == 'D')
-				printf("DOOOOOOR OPEN\n");
-			printf("Hdistance = %f\n", Hdistance);
             param->rays[i].distance = Hdistance;
             param->rays[i].hit_x = Hhitx;
             param->rays[i].hit_y = Hhity;
