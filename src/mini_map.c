@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 10:10:37 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 09:59:40 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:25:41 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void p_setup(t_player *p, char **map)
     p->y = (get_player_y(map) * TILE_SIZE) + TILE_SIZE / 2;
 }
 
-void draw_line(double x, double y, double x1, double y1, t_img_info *img, int color)
+void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color)
 {
     double dx;
     double dy;
@@ -145,7 +145,7 @@ void render_p(t_img_info *img, t_player *p)
                 ft_put_pixel(img, (j+p->x-p->radius)  , (i+p->y-p->radius), 0x00FF0000);
     x1 = p->x + cos(deg2rad(p->rotationAngle)) * LINE_LENGTH;
     y1 = p->y + sin(deg2rad(p->rotationAngle)) * LINE_LENGTH;
-    draw_line(p->x, p->y, x1 , y1, img, 0x00FF0000);
+    draw_line_y(p->x, p->y, x1 , y1, img, 0x00FF0000);
 }
 
 

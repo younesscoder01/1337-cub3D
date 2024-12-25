@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/22 12:15:57 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 10:05:03 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@
 
 /*------------Macros-------------*/
 # define M_PI 3.14159265358979323846
-# define WINDOW_WIDTH 1080
-# define WINDOW_HEIGHT 720
+# define WALL_STRIP_WIDTH 1
+# define FOV 60
+# define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define FRAME_WIDTH (TILE_SIZE * 3)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
-# define TILE_SIZE (WINDOW_WIDTH / 12)
+# define TILE_SIZE 46//(WINDOW_WIDTH / 12)
 # define RADIUS (TILE_SIZE / 12)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
@@ -74,14 +77,20 @@ enum {
 };
 
 /*------------Structs------------*/
-//bfs sturct
-typedef struct node
+//ray struct
+typedef struct s_ray
 {
-        struct node     *next;
-        struct node     *parent;
-        int                     x;
-        int                     y;
-}                               t_node;
+	double	angle;
+	int		column_id;
+	float	hit_x;
+	float	hit_y;
+	double	distance;
+	bool	dir_hit;
+	bool	is_down;
+	bool	is_up;
+	bool	is_right;
+	bool	is_left;
+}				t_rays[NUM_RAYS];
 //player struct
 typedef struct s_player
 {
@@ -111,6 +120,7 @@ typedef struct  s_data
 {
     void		*mlx;
     void		*mlx_win;
+	t_rays		rays;
 	t_player	player;
 	int			**check_arr;
 	int 		map_x;
@@ -147,4 +157,22 @@ void print_arr(int **arr, int max_r, int map_h);
 int get_player_x(char **map);
 int get_player_y(char **map);
 void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
+void draw_line_angle(t_data *data, double angle, int x, int y);
+void draw_line(t_data *data, int x, int y, int x1, int y1);
+double calc_dist(long x, long x1, long y , long y1);
+double rad2deg(double angle);
+double norm_angle(double angle);
+void draw_circle(t_data *data, double cx, double cy, float radius);
+void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color);
+void calc_rays(t_data *data);
+
+
+
+
+
+
+
+
+
+
 #endif

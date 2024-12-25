@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/21 10:14:33 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 09:41:54 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void create_frame(t_data *data, int fx, int fy)
     rect(data->frame, 0, FRAME_HEIGHT - 10, FRAME_WIDTH, 10, lfaa5ti);
     rect(data->frame, FRAME_WIDTH - 10, 0, 10, FRAME_HEIGHT, lfaa5ti);
     copy_img(data->frame, data->game_frame, 0, 0, FRAME_HEIGHT, FRAME_WIDTH);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
 }
 
 void floor_ceiling(t_img_info *img, int color1, int color2)
@@ -197,8 +197,10 @@ int render_next_frame(void *data1)
 
     data = (t_data *)data1;
     render_minimap(data);
+    calc_rays(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->minimap_img->img, 0, 0);
     create_frame(data, 0, 0);
     // printf("player x: %i\nplayer y: %i\n", data->player.x, data->player.y);
     //TODO=rays calculation

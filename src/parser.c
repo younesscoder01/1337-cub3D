@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
+/*   Updated: 2024/12/24 21:29:54 by rbenmakh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D.h"
 /*
 	- CHECK THE BOUNDARIES OF THE MAP
@@ -5,6 +17,25 @@
 	-UPDATE THE STRUCT WITH 2D MAP
 */
 //check the edges of the map
+int	find_longest_row(char **map)
+{
+	int	i;
+	int	len;
+	int	max;
+
+	i = 0;
+	max = 0;
+	if (!map)
+		return (0);
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len > max)
+			max = len;
+		i++;
+	}
+	return (max);
+}
 int check_boundaries(char **map, size_t map_h)
 {
 	size_t i;
@@ -344,14 +375,16 @@ int setup(int argc, char **argv, t_data *d)
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
-	if(read_textures_colors(d, fd))
-	{
-		close(fd);
-		printf("false textures\n");
-		return(false);
-	}
+	//TODO check file name extension in the config file
+	//todo check if there is a gap in the map
+	// if(read_textures_colors(d, fd))
+	// {
+	// 	close(fd);
+	// 	printf("false textures\n");
+	// 	return(false);
+	// }
 	// print_config(d);
 	if(!read_map(fd, d))
-		return(false);
+		return(false); 
 	return(true);
 }
