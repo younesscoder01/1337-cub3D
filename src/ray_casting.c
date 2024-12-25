@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 16:55:27 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:01:36 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is_wall(float x, float y, char **map, t_data *data, int mod)
 		return(1);
     if (map[map_grid_y][map_grid_x] == 'D' && distance(data->player.x, data->player.y, x, y) <= TILE_SIZE * 2 && mod == 1)
     {
-        printf("You Win\n");
+        // printf("You Win\n");
         if (map_grid_x == data->player.x / TILE_SIZE || map_grid_y == data->player.y / TILE_SIZE)
         {
             if (map_grid_x + 1 == data->player.x / TILE_SIZE)
