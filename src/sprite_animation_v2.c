@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:15:41 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 15:06:07 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:53:35 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void animate_weapon_shoting(t_data *data, int end)
     animation_delay = set_up_animation_delay(end);
     render_minimap(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
+    render_3d_walls(data);
     create_frame(data, 0, 0);
     copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_height, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_width);
     // mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
@@ -74,6 +75,7 @@ void animate_weapon_reload(t_data *data, int last_end)
     animation_delay = set_up_animation_delay(end - last_end);
     render_minimap(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
+    render_3d_walls(data);
     create_frame(data, 0, 0);
     copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end], data->game_frame, 0, 0,\
                      data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end]->img_height, \

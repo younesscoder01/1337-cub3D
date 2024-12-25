@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 10:27:16 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:46:06 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <stdbool.h>
 #include <sys/time.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 
 # define WINDOW_WIDTH 800
@@ -55,6 +56,7 @@
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 # define LBAR9O9I 0x00532e12
+# define PINK 0x00FF69B4
 
 /*-------------Enums------------*/
 enum{
@@ -229,14 +231,6 @@ double norm_angle(double angle);
 void draw_circle(t_data *data, double cx, double cy, float radius);
 void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color);
 void calc_rays(t_data *data);
-
-
-
-
-
-
-
-
-
-
+void render_3d_walls(t_data *data);
+void castAllrays(t_data *param);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 10:58:01 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/25 12:17:00 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int key_p(int keycode, void *data1)
 {
     t_data *data;
 
-    printf("keycode = %i\n", keycode);
+    // printf("keycode = %i\n", keycode);
     data = (t_data *)data1;
     if (keycode == KEY_A || keycode == KEY_D)
         data->player.is_move_side = 1;
@@ -108,7 +108,7 @@ int mouse_hook(int x, int y, t_data *data)
     data->player.rotationAngle += data->player.turnDirection * MOVE_SPEED_MOUSE;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     data->mouse_x = x;
-    printf("turnDirection = %f\n", data->player.turnDirection);
+    // printf("turnDirection = %f\n", data->player.turnDirection);
     data->player.turnDirection = 0;
     return (0);
 }
