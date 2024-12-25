@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 12:03:30 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 12:59:56 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void render_3d_walls(t_data *data)
         distanceProjPlane = ((double)WINDOW_WIDTH / 2.0) / tan(deg2rad(FOV / 2));
         correctDistance = data->rays[i].distance * cos(deg2rad(data->rays[i].angle) - deg2rad(data->player.rotationAngle));
 
-        alpha = 1.0 - (80.0 / correctDistance);
+        alpha = 1.0 - (90.0 / correctDistance);
         // if (data->rays[i].wasHitVertical != 1)
         //     color = RED;
         // else 

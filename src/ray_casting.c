@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 12:24:30 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:05:10 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void castAllrays(t_data *param)
 			{
                 foundHwallhit = 1;
                 Hhitx = xintercept;
-                Hhity = yintercept;
+                Hhity = yintercept - py;
                 break;
             }
             yintercept += ystep;
@@ -124,7 +124,7 @@ void castAllrays(t_data *param)
 			if(is_wall(xintercept - px, yintercept , param->map, param))
             {
                 foundVwallhit = 1;
-                Vhitx = xintercept;
+                Vhitx = xintercept - px;
                 Vhity = yintercept;
                 break;
             }
@@ -144,6 +144,9 @@ void castAllrays(t_data *param)
         
         if (Hdistance < Vdistance)
         {
+			if (Hdistance == 15 && param->map[(int)Hhity / TILE_SIZE][(int)Hhitx / TILE_SIZE] == 'D')
+				printf("DOOOOOOR OPEN\n");
+			printf("Hdistance = %f\n", Hdistance);
             param->rays[i].distance = Hdistance;
             param->rays[i].hit_x = Hhitx;
             param->rays[i].hit_y = Hhity;
