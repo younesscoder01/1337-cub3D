@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 12:16:50 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:18:47 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win)
     t_img_info *frame;
     t_img_info *game_frame;
 
+    data->mouse_x = 0;
     minimap_img = malloc(sizeof(t_img_info));
     frame = malloc(sizeof(t_img_info));
     game_frame = malloc(sizeof(t_img_info));
@@ -106,11 +107,7 @@ void init_weapons(t_data *data)
             data->all_weapons[i].weapon[j]->img_height = WINDOW_HEIGHT;
             data->all_weapons[i].weapon[j]->img = mlx_xpm_file_to_image(data->mlx, filename, &data->all_weapons[i].weapon[j]->img_width, &data->all_weapons[i].weapon[j]->img_height);
             if (data->all_weapons[i].weapon[j]->img == NULL)
-            {
-                printf("error and j = %i\n", j);
-                printf("filename = %s\n", filename);
-                printf("data->all_weapons[%i].index_to_change = %i\n", i, data->all_weapons[i].index_to_change);
-            }
+                printf("error in loading weapon image: filename = %s\n", filename);
             data->all_weapons[i].weapon[j]->addr = mlx_get_data_addr(data->all_weapons[i].weapon[j]->img, &data->all_weapons[i].weapon[j]->bits_per_pixel, \
                                                                     &data->all_weapons[i].weapon[j]->line_length, &data->all_weapons[i].weapon[j]->endian);
             data->all_weapons[i].weapon[j]->filename = strdup(data->weapon_names[i]);

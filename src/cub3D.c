@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 12:18:46 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:18:55 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ int main(int argc, char **argv)
     {
         printf("false map\n");
         return(1);
-    }
-    data.mouse_x = 0;
-    //print the map
-    for (int i = 0; data.map[i]; i++)
-    {
-        printf("%s\n", data.map[i]);
     }
     intialize_data(&data, data.map, 0, 0);
     init_weapon_names(&data);
