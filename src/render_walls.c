@@ -6,13 +6,14 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 12:59:56 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:35:18 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-unsigned int darken_color(unsigned int color, double factor) {
+unsigned int darken_color(unsigned int color, double factor) 
+{
     if (factor < 0.0) 
         factor = 0.0;
     if (factor > 1.0)

@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:15:41 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 11:53:35 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:26:31 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void animate_weapon_shoting(t_data *data, int end)
     }
     animation_delay = set_up_animation_delay(end);
     render_minimap(data);
+    castAllrays(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
     render_3d_walls(data);
     create_frame(data, 0, 0);
@@ -74,6 +75,7 @@ void animate_weapon_reload(t_data *data, int last_end)
     }
     animation_delay = set_up_animation_delay(end - last_end);
     render_minimap(data);
+    castAllrays(data);
     floor_ceiling(data->game_frame, BLUE, WHITE);
     render_3d_walls(data);
     create_frame(data, 0, 0);

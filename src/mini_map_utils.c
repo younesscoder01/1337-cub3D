@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 13:29:13 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 12:05:25 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:08:25 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,19 @@
 
 size_t get_map_width(char **map_name)
 {
-    return (strlen(map_name[0]));
+    int i;
+    size_t max;
+    
+    //max width of the map
+    i = 1;
+    max = strlen(map_name[0]);
+    while (map_name[i])
+    {
+        if (strlen(map_name[i]) > max)
+            max = strlen(map_name[i]);
+        i++;
+    }
+    return (max);
 }
 
 size_t get_map_height(char **map_name)

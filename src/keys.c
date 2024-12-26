@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 12:17:00 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 09:59:35 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,8 @@ double normalizeAngle(double angle)
     return angle;
 }
 
-int key_p(int keycode, void *data1)
+void weapon_action_keys(int keycode, t_data *data)
 {
-    t_data *data;
-
-    // printf("keycode = %i\n", keycode);
-    data = (t_data *)data1;
-    if (keycode == KEY_A || keycode == KEY_D)
-        data->player.is_move_side = 1;
-    if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_D)
-        data->player.walkDirection = 1;
-    else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_A)
-        data->player.walkDirection = -1;
-    else if (keycode == KEY_LEFT)
-        data->player.turnDirection = -1;
-    else if (keycode == KEY_RIGHT)
-        data->player.turnDirection = 1;
-    else if (keycode == ESC)
-        close_win(data);
-    else if (keycode == SPACE || keycode == 1)
-        data->animate_weapon = true;
     if (keycode == ZERO)
         data->weapon_numb = 0;
     else if (keycode == ONE)
@@ -57,18 +39,31 @@ int key_p(int keycode, void *data1)
         data->weapon_numb = 6;
     else if (keycode == R)
         data->weapon_reload = true;
+}
+
+int key_p(int keycode, void *data1)
+{
+    t_data *data;
+
+    printf("keycode = %i\n", keycode);
+    data = (t_data *)data1;
+    if (keycode == KEY_A || keycode == KEY_D)
+        data->player.is_move_side = 1;
+    if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_D)
+        data->player.walkDirection = 1;
+    else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_A)
+        data->player.walkDirection = -1;
+    else if (keycode == KEY_LEFT)
+        data->player.turnDirection = -1;
+    else if (keycode == KEY_RIGHT)
+        data->player.turnDirection = 1;
+    else if (keycode == ESC)
+        close_win(data);
+    else if (keycode == SPACE || keycode == 1)
+        data->animate_weapon = true;
+    weapon_action_keys(keycode, data);
     data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
-    // if (keycode == KEY_A || keycode == KEY_D)
-    // {
-    //     check_x = data->player.x - round(cos(deg2rad(data->player.rotationAngle + 90)) * moveStep);
-    //     check_y = data->player.y - round(sin(deg2rad(data->player.rotationAngle + 90)) * moveStep);
-    // }
-    // else
-    // {
-    //     check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle)) * moveStep);
-    //     check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle)) * moveStep);
-    // }
     return 0;
 }
 

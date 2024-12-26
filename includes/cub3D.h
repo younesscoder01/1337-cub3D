@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 11:46:06 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/26 10:15:29 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
-# define FRAME_WIDTH (TILE_SIZE * 3)
+# define FRAME_WIDTH (TILE_SIZE * 4)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
 # define TILE_SIZE (WINDOW_WIDTH / 12)
 # define RADIUS (TILE_SIZE / 15)
@@ -98,7 +98,8 @@ enum {
 	SEVEN = 55,
 	EIGHT = 56,
 	NINE = 57,
-	R = 114
+	R = 114,
+	SHIFT = 65505
 };
 
 /*------------Structs------------*/
@@ -197,10 +198,8 @@ double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
 int setup(int argc, char **argv, t_data * d);
-int	bfs(int st_x, int st_y, t_data *d, int map_h);
 int	find_longest_row(char **map);
 void free_arr(void **arr, int i);
-void print_arr(int **arr, int max_r, int map_h);
 int get_player_x(char **map);
 int get_player_y(char **map);
 void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
@@ -230,7 +229,7 @@ double rad2deg(double angle);
 double norm_angle(double angle);
 void draw_circle(t_data *data, double cx, double cy, float radius);
 void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int color);
-void calc_rays(t_data *data);
 void render_3d_walls(t_data *data);
 void castAllrays(t_data *param);
+unsigned int darken_color(unsigned int color, double factor);
 #endif
