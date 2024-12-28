@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_walls.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 09:35:18 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:05:08 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,43 @@ void render_3d_walls(t_data *data)
             color = GREEN;
         shade_color = darken_color(color, alpha);
         wallStripHeight = ((double)TILE_SIZE / correctDistance) * distanceProjPlane;
-        rect(data->game_frame, i * WALL_STRIP_WIDTH, (WINDOW_HEIGHT / 2) - ((int)wallStripHeight / 2), WALL_STRIP_WIDTH, (int)wallStripHeight, shade_color);
+        double wall_height_top = (WINDOW_HEIGHT / 2) - ((int)wallStripHeight / 2);
+        //wall_height_top = wall_height_top < 0 ? 0 : wall_height_top;
+        if(wall_height_top < 0)
+            wall_height_top = 0;
+        double wall_height_bottom = (WINDOW_HEIGHT / 2) + ((int)wallStripHeight / 2);
+        //wall_height_bottom = wall_height_bottom > WINDOW_HEIGHT ? WINDOW_HEIGHT : wall_height_bottom;
+        if(wall_height_bottom > WINDOW_HEIGHT)
+            wall_height_bottom = WINDOW_HEIGHT;
+       //calculate the offset to acess to the texture buffer
+       double texture_offset_x = 0;
+       double texture_offset_y = 0;
+       if(data->rays[i].Was_hit_vertical)
+           texture_offset_x = (int)data->rays[i].hit_y % TILE_SIZE;
+       else
+           texture_offset_x = (int)data->rays[i].hit_x % TILE_SIZE;
+
+        //color the wall from wall height top to wall height bottom
+       for(int j = wall_height_top; j < wall_height_bottom;j++)
+       {
+ 
+           int dst_from_top = j + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
+           texture_offset_y = dst_from_top * ((double)TILE_SIZE / (double)wallStripHeight);
+           //get the color based on the direction of the ray 
+           if(data->rays[i].is_down )
+               color = get_px_color(data->textures[0], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_up)
+                color = get_px_color(data->textures[1], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_right )
+                color = get_px_color(data->textures[2], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_left)
+                color = get_px_color(data->textures[3], texture_offset_x, texture_offset_y);
+           
+           
+           
+           shade_color = darken_color(color, alpha);
+           ft_put_pixel(data->game_frame, i * WALL_STRIP_WIDTH, j, shade_color);             
+        }
         i++;
     }
 }

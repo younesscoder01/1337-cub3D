@@ -1,3 +1,10 @@
+NO ./wall_txt/Brown1.xpm
+SO ./wall_txt/Brown2.xpm
+WE ./wall_txt/Brown3.xpm
+EA ./wall_txt/Brown4.xpm
+F 220,100,0
+C 225,30,0
+
 111111111111111
 101000000000W01
 100100010000001
