@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 10:15:29 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/28 13:29:30 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <limits.h>
+# include "../libft/libft.h"
 
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
-# include "../libft/libft.h"
 
 /*------------Macros-------------*/
 # define WALL_STRIP_WIDTH 1
@@ -37,9 +37,9 @@
 # define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
+# define TILE_SIZE 64
 # define FRAME_WIDTH (TILE_SIZE * 4)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
-# define TILE_SIZE (WINDOW_WIDTH / 12)
 # define RADIUS (TILE_SIZE / 15)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
