@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 09:59:35 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 09:05:23 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int key_p(int keycode, void *data1)
 {
     t_data *data;
 
-    printf("keycode = %i\n", keycode);
+    // printf("keycode = %i\n", keycode);
     data = (t_data *)data1;
     if (keycode == KEY_A || keycode == KEY_D)
         data->player.is_move_side = 1;

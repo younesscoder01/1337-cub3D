@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 17:01:36 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:36:49 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	is_wall(float x, float y, char **map, t_data *data, int mod)
     }
     return(map[map_grid_y][map_grid_x] == '1' || map[map_grid_y][map_grid_x] == 'D');
 }
-
-
 
 void castAllrays(t_data *param)
 {
@@ -165,12 +163,14 @@ void castAllrays(t_data *param)
             param->rays[i].distance = Hdistance;
             param->rays[i].hit_x = Hhitx;
             param->rays[i].hit_y = Hhity;
+            param->rays[i].Was_hit_vertical = 0;
         }
         else
         {
             param->rays[i].distance = Vdistance;
             param->rays[i].hit_x = Vhitx;
             param->rays[i].hit_y = Vhity;
+            param->rays[i].Was_hit_vertical = 1;
         }
         draw_line_y(param->player.x , param->player.y ,  param->rays[i].hit_x ,  param->rays[i].hit_y , param->minimap_img, PINK);
         rayAngle += (double)(FOV) / (double)(NUM_RAYS);

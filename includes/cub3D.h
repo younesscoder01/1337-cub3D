@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/28 17:05:40 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 08:57:25 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,4 +235,5 @@ void render_3d_walls(t_data *data);
 void castAllrays(t_data *param);
 unsigned int darken_color(unsigned int color, double factor);
 unsigned int get_px_color(t_img_info *img, int x, int y);
+int init_textures(t_data *data,char **txt);
 #endif

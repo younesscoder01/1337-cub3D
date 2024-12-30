@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/28 17:32:16 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 08:58:32 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,9 +271,9 @@ int check_color(int mod, char *col, t_data *data)
 		c[i] = check;
 		i++;
 	}
-	free_arr((void *)tmp, 0);
  	if(tmp[i])
 		return(false);
+	free_arr((void *)tmp, 0);
 	data->color[mod] = create_trgb(0, c[0], c[1], c[2]);
 	return(true);
 }
@@ -381,13 +381,12 @@ int init_textures(t_data *data,char **txt)
 
 	while (i < 4)
 	{
-		data->textures[i] = malloc(sizeof(t_img_info));
+		data->textures[i] = (t_img_info *)malloc(sizeof(t_img_info));
 		data->textures[i]->img_height = 64;
 		data->textures[i]->img_width = 64;
 		data->textures[i]->img = mlx_xpm_file_to_image(data->mlx, txt[i], &data->textures[i]->img_height, &data->textures[i]->img_width);
 		if(data->textures[i]->img == NULL)
 		{
-			printf("mlx_xpm_to_image fails\n");
 			return(false);
 		}
 		data->textures[i]->addr = mlx_get_data_addr(data->textures[i]->img, &data->textures[i]->bits_per_pixel, &data->textures[i]->line_length, &data->textures[i]->endian);
@@ -404,12 +403,6 @@ int setup(int argc, char **argv, t_data *d)
 	//TODO check file name extension in the config file
 	//todo check if there is a gap in the map
 	if(read_textures_colors(d, fd))
-	{
-		close(fd);
-		printf("false textures\n");
-		return(false);
-	}
-	if(init_textures(d, d->txt))
 	{
 		close(fd);
 		printf("false textures\n");

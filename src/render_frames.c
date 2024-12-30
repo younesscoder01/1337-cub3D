@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 10:00:47 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:36:11 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ void movement_update(t_data *data)
     moveStep = data->player.walkDirection * data->player.moveSpeed;
     check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
     check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
-    printf("walkDirection: %f\n", data->player.walkDirection);
-    printf("rotationAngle: %f\n", data->player.rotationAngle);
+
     if (data->map[data->player.y / TILE_SIZE][check_x / TILE_SIZE] != '1')
         data->player.x = check_x;
     if (data->map[check_y / TILE_SIZE][data->player.x / TILE_SIZE] != '1')
@@ -83,7 +82,7 @@ int update(void *data1)
     {
         render_minimap(data);
         castAllrays(data);
-        floor_ceiling(data->game_frame, BLUE, WHITE);
+        floor_ceiling(data->game_frame, data->color[0], data->color[1]);
         render_3d_walls(data);
         create_frame(data, 0, 0);
         take_weapon(data);

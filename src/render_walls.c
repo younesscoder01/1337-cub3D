@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/28 17:05:08 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:29:02 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,15 @@ void render_3d_walls(t_data *data)
            int dst_from_top = j + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
            texture_offset_y = dst_from_top * ((double)TILE_SIZE / (double)wallStripHeight);
            //get the color based on the direction of the ray 
-           if(data->rays[i].is_down )
-               color = get_px_color(data->textures[0], texture_offset_x, texture_offset_y);
-            else if (data->rays[i].is_up)
-                color = get_px_color(data->textures[1], texture_offset_x, texture_offset_y);
-            else if (data->rays[i].is_right )
-                color = get_px_color(data->textures[2], texture_offset_x, texture_offset_y);
-            else if (data->rays[i].is_left)
+              if(data->rays[i].is_down && !data->rays[i].Was_hit_vertical)
+              color = get_px_color(data->textures[0], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_up && !data->rays[i].Was_hit_vertical)
+               color = get_px_color(data->textures[1], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_right && data->rays[i].Was_hit_vertical)
+               color = get_px_color(data->textures[2], texture_offset_x, texture_offset_y);
+            else if (data->rays[i].is_left && data->rays[i].Was_hit_vertical)
                 color = get_px_color(data->textures[3], texture_offset_x, texture_offset_y);
-           
+            shade_color = darken_color(color, alpha);
            
            
            shade_color = darken_color(color, alpha);

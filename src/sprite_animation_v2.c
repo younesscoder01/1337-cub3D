@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite_animation_v2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:15:41 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 09:26:31 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 10:35:12 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void animate_weapon_shoting(t_data *data, int end)
     animation_delay = set_up_animation_delay(end);
     render_minimap(data);
     castAllrays(data);
-    floor_ceiling(data->game_frame, BLUE, WHITE);
+    floor_ceiling(data->game_frame,data->color[0], data->color[1]);
     render_3d_walls(data);
     create_frame(data, 0, 0);
     copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index], data->game_frame, 0, 0, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_height, data->all_weapons[data->weapon_numb].weapon[data->frame_index]->img_width);
@@ -76,7 +76,7 @@ void animate_weapon_reload(t_data *data, int last_end)
     animation_delay = set_up_animation_delay(end - last_end);
     render_minimap(data);
     castAllrays(data);
-    floor_ceiling(data->game_frame, BLUE, WHITE);
+    floor_ceiling(data->game_frame, data->color[0], data->color[1]);
     render_3d_walls(data);
     create_frame(data, 0, 0);
     copy_img_sprite(data->all_weapons[data->weapon_numb].weapon[data->frame_index + last_end], data->game_frame, 0, 0,\
