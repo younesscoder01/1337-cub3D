@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/30 08:58:32 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:27:48 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,11 +392,36 @@ int init_textures(t_data *data,char **txt)
 		data->textures[i]->addr = mlx_get_data_addr(data->textures[i]->img, &data->textures[i]->bits_per_pixel, &data->textures[i]->line_length, &data->textures[i]->endian);
 		i++;
 	}
+	data->door = (t_img_info *)malloc(sizeof(t_img_info));
+	data->door->img_height = 64;
+	data->door->img_width = 64;
+	data->door->img = mlx_xpm_file_to_image(data->mlx, "./wall_txt/Black4 copy.xpm", &data->door->img_height, &data->door->img_width);
+	if(data->door->img == NULL)
+	{
+		return(false);
+	}
+	printf("door\n");
+	data->door->addr = mlx_get_data_addr(data->door->img, &data->door->bits_per_pixel, &data->door->line_length, &data->door->endian);
+	return(true);
+}
+int check_extension(char *file)
+{
+	char *tmp;
+
+	tmp = ft_strrchr(file, '.');
+	if (*file == '.' || !tmp || !ft_strnstr(tmp, ".cub", 4))
+		return(false);
 	return(true);
 }
 int setup(int argc, char **argv, t_data *d)
 {
 	(void)argc;
+	//check extension
+	if(!check_extension(argv[1]))
+	{
+		printf("Error\nFile extension is not correct must be *.cub\n");
+		return(false);
+	}
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
@@ -409,6 +434,9 @@ int setup(int argc, char **argv, t_data *d)
 		return(false);
 	}
 	if(!read_map(fd, d))
+	{
+		printf("false map\n");
 		return(false); 
+	}
 	return(true);
 }

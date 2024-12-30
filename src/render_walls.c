@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 10:29:02 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 11:25:15 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void render_3d_walls(t_data *data)
         correctDistance = data->rays[i].distance * cos(deg2rad(data->rays[i].angle) - deg2rad(data->player.rotationAngle));
 
         alpha = 1.0 - (90.0 / correctDistance);
-        // if (data->rays[i].wasHitVertical != 1)
-        //     color = RED;
-        // else 
-        //     color = B_RED;
+
         if (data->map[(int)data->rays[i].hit_y / TILE_SIZE][(int)data->rays[i].hit_x / TILE_SIZE] == 'D')
             color = GREEN;
         shade_color = darken_color(color, alpha);
@@ -83,7 +80,9 @@ void render_3d_walls(t_data *data)
            int dst_from_top = j + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
            texture_offset_y = dst_from_top * ((double)TILE_SIZE / (double)wallStripHeight);
            //get the color based on the direction of the ray 
-              if(data->rays[i].is_down && !data->rays[i].Was_hit_vertical)
+            if (data->map[(int)data->rays[i].hit_y / TILE_SIZE][(int)data->rays[i].hit_x / TILE_SIZE] == 'D')
+            color =  get_px_color(data->door, texture_offset_x, texture_offset_y);
+            else if(data->rays[i].is_down && !data->rays[i].Was_hit_vertical)
               color = get_px_color(data->textures[0], texture_offset_x, texture_offset_y);
             else if (data->rays[i].is_up && !data->rays[i].Was_hit_vertical)
                color = get_px_color(data->textures[1], texture_offset_x, texture_offset_y);

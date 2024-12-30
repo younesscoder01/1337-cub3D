@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 09:05:23 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:01:05 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int key_p(int keycode, void *data1)
     else if (keycode == SPACE || keycode == 1)
         data->animate_weapon = true;
     weapon_action_keys(keycode, data);
-    data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
-    data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
+    // data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
+    // data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     return 0;
 }
 
@@ -103,7 +103,6 @@ int mouse_hook(int x, int y, t_data *data)
     data->player.rotationAngle += data->player.turnDirection * MOVE_SPEED_MOUSE;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     data->mouse_x = x;
-    // printf("turnDirection = %f\n", data->player.turnDirection);
     data->player.turnDirection = 0;
     return (0);
 }
