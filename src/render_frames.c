@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 18:01:19 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:35:03 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,12 @@ void movement_update(t_data *data)
 {
         double move_step;
         
-         data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
+        data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
         data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
         move_step = data->player.moveSpeed * data->player.walkDirection;
         int sx, sy;
         sx = round(move_step * (cos(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
         sy = round(move_step * (sin(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
-
-        
         data->player.x += sx *(data->map[data->player.y/TILE_SIZE][(data->player.x + sx)/TILE_SIZE ] != '1');
         data->player.y += sy *(data->map[(data->player.y + sy)/TILE_SIZE ][data->player.x/TILE_SIZE] != '1');
 }

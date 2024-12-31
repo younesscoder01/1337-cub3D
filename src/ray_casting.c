@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/30 10:36:49 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:40:49 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void castAllrays(t_data *param)
             param->rays[i].hit_y = Vhity;
             param->rays[i].Was_hit_vertical = 1;
         }
-        draw_line_y(param->player.x , param->player.y ,  param->rays[i].hit_x ,  param->rays[i].hit_y , param->minimap_img, PINK);
+        // draw_line_y(param->player.x , param->player.y ,  param->rays[i].hit_x ,  param->rays[i].hit_y , param->minimap_img, PINK);
         rayAngle += (double)(FOV) / (double)(NUM_RAYS);
         i++;
     }

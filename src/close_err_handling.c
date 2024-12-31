@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:11:06 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/24 11:38:37 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:43:18 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void free_weapon_imgs(t_data *data)
         {
             free(data->all_weapons[i].weapon[j]->filename);
             destroy_img(data->mlx, data->all_weapons[i].weapon[j]);
-            // printf("destroyed the img named %s\n", data->all_weapons[i].weapon[j]->filename);
             j++;
         }
         free(data->all_weapons[i].weapon);

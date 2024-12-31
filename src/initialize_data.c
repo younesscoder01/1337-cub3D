@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 10:06:28 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 10:18:47 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:39:09 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win)
     game_frame = malloc(sizeof(t_img_info));
     minimap_img->img_height =  get_map_height(map) * TILE_SIZE;
     minimap_img->img_width = get_map_width(map) * TILE_SIZE;
-    // printf("get map height = %li\nget map width = %li\n", get_map_height(map), get_map_width(map));
-    // exit(0);
-    // printf("height = %i\nwidth = %i\n", minimap_img->img_height, minimap_img->img_width);
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3D");
     minimap_img->img = mlx_new_image(mlx, minimap_img->img_width, minimap_img->img_height);
@@ -99,7 +96,6 @@ void init_weapons(t_data *data)
         j = 0;
         k = 2;
         filename = strdup(data->weapon_names[i]);
-        // printf("filename = %s\n", filename);
         while (j < data->all_weapons[i].frame_numb)
         {
             data->all_weapons[i].weapon[j] = malloc(sizeof(t_img_info));
