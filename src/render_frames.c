@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/31 15:35:03 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:49:46 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,18 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
 
 void movement_update(t_data *data)
 {
-        double move_step;
-        
-        data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
-        data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
-        move_step = data->player.moveSpeed * data->player.walkDirection;
-        int sx, sy;
-        sx = round(move_step * (cos(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
-        sy = round(move_step * (sin(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
-        data->player.x += sx *(data->map[data->player.y/TILE_SIZE][(data->player.x + sx)/TILE_SIZE ] != '1');
-        data->player.y += sy *(data->map[(data->player.y + sy)/TILE_SIZE ][data->player.x/TILE_SIZE] != '1');
+    int check_x, check_y;
+    double move_step;
+
+    data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
+    data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
+    move_step = data->player.moveSpeed * data->player.walkDirection;
+    check_x = round(move_step * (cos(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
+    check_y = round(move_step * (sin(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
+    if (data->map[data->player.y/TILE_SIZE][(data->player.x + check_x)/TILE_SIZE ] != '1')
+        data->player.x += check_x;
+    if ((data->map[(data->player.y + check_y)/TILE_SIZE ][data->player.x/TILE_SIZE] != '1'))
+        data->player.y += check_y;
 }
 
 int update(void *data1)
@@ -69,7 +71,6 @@ int update(void *data1)
     t_data *data;
 
     data = (t_data *)data1;
-    // printf("data animate weapon = %i\n", data->animate_weapon);
     if (data->animate_weapon)
         animate_weapon_shoting(data, data->all_weapons[data->weapon_numb].shoting_end);
     else if (data->weapon_reload)
@@ -83,11 +84,7 @@ int update(void *data1)
         create_frame(data, 0, 0);
         take_weapon(data);
     }
-    // printf("player x: %i\nplayer y: %i\n", data->player.x, data->player.y);
     render_bullets(data);
-    //TODO=rays calculation
-
-    //put the image to the window
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
     movement_update(data);
     

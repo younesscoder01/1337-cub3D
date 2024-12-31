@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 18:01:05 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:46:10 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int key_p(int keycode, void *data1)
     else if (keycode == SPACE || keycode == 1)
         data->animate_weapon = true;
     weapon_action_keys(keycode, data);
-    // data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
-    // data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     return 0;
 }
 
