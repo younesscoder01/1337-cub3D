@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/25 11:58:45 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:27:48 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ void print_char_arr(char **arr)
 	}
 }
 //memset the array of textures with 0
-void init_textures(char **arr)
+void init_arr(char **arr)
 {
 	for(int i = 0; i < 7; i++)
 	{
@@ -271,9 +271,9 @@ int check_color(int mod, char *col, t_data *data)
 		c[i] = check;
 		i++;
 	}
-	free_arr((void *)tmp, 0);
-	if(tmp[i])
+ 	if(tmp[i])
 		return(false);
+	free_arr((void *)tmp, 0);
 	data->color[mod] = create_trgb(0, c[0], c[1], c[2]);
 	return(true);
 }
@@ -328,7 +328,7 @@ int read_textures_colors(t_data *data, int fd)
 
 	tot = 0;
     read = get_next_line(fd);
-	init_textures(arr);
+	init_arr(arr);
 	while (read)
 	{
 		if(read[0] == '\n')
@@ -375,22 +375,68 @@ void print_config(t_data *data)
 	printf("%d\n", data->color[0]);
 	printf("%d\n", data->color[1]);
 }
+int init_textures(t_data *data,char **txt)
+{
+	int i = 0;
+
+	while (i < 4)
+	{
+		data->textures[i] = (t_img_info *)malloc(sizeof(t_img_info));
+		data->textures[i]->img_height = 64;
+		data->textures[i]->img_width = 64;
+		data->textures[i]->img = mlx_xpm_file_to_image(data->mlx, txt[i], &data->textures[i]->img_height, &data->textures[i]->img_width);
+		if(data->textures[i]->img == NULL)
+		{
+			return(false);
+		}
+		data->textures[i]->addr = mlx_get_data_addr(data->textures[i]->img, &data->textures[i]->bits_per_pixel, &data->textures[i]->line_length, &data->textures[i]->endian);
+		i++;
+	}
+	data->door = (t_img_info *)malloc(sizeof(t_img_info));
+	data->door->img_height = 64;
+	data->door->img_width = 64;
+	data->door->img = mlx_xpm_file_to_image(data->mlx, "./wall_txt/Black4 copy.xpm", &data->door->img_height, &data->door->img_width);
+	if(data->door->img == NULL)
+	{
+		return(false);
+	}
+	printf("door\n");
+	data->door->addr = mlx_get_data_addr(data->door->img, &data->door->bits_per_pixel, &data->door->line_length, &data->door->endian);
+	return(true);
+}
+int check_extension(char *file)
+{
+	char *tmp;
+
+	tmp = ft_strrchr(file, '.');
+	if (*file == '.' || !tmp || !ft_strnstr(tmp, ".cub", 4))
+		return(false);
+	return(true);
+}
 int setup(int argc, char **argv, t_data *d)
 {
 	(void)argc;
+	//check extension
+	if(!check_extension(argv[1]))
+	{
+		printf("Error\nFile extension is not correct must be *.cub\n");
+		return(false);
+	}
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
 	//TODO check file name extension in the config file
 	//todo check if there is a gap in the map
-	// if(read_textures_colors(d, fd))
-	// {
-	// 	close(fd);
-	// 	printf("false textures\n");
-	// 	return(false);
-	// }
-	// print_config(d);
+	if(read_textures_colors(d, fd))
+	{
+		close(fd);
+		printf("false textures\n");
+		return(false);
+	}
 	if(!read_map(fd, d))
+	{
+		printf("false map\n");
 		return(false); 
+	}
 	return(true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 10:18:55 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:29:20 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@ int main(int argc, char **argv)
     if (argc != 2)
         return printf("Error There is no map\n");
     else
-        printf("map name : %s\n", argv[1]);
+        printf("Config file name : %s\n", argv[1]);
     if(!setup(argc, argv, &data))
     {
-        printf("false map\n");
         return(1);
     }
     intialize_data(&data, data.map, 0, 0);
     init_weapon_names(&data);
     init_weapons(&data);
+    if(!init_textures(&data, data.txt))
+	{
+		printf("mlx_xpm_to_image fails\n");
+		return(false);
+	}
     p_setup(&data.player, data.map);
     init_bullet(&data);
     mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);

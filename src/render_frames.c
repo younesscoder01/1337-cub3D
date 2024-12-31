@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/26 10:00:47 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:01:19 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,18 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
 
 void movement_update(t_data *data)
 {
-    int check_x;
-    int check_y;
-    double moveStep;
+        double move_step;
+        
+         data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
+        data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
+        move_step = data->player.moveSpeed * data->player.walkDirection;
+        int sx, sy;
+        sx = round(move_step * (cos(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
+        sy = round(move_step * (sin(deg2rad(data->player.rotationAngle+ (90 * data->player.is_move_side)))));
 
-    
-    moveStep = data->player.walkDirection * data->player.moveSpeed;
-    check_x = data->player.x + round(cos(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
-    check_y = data->player.y + round(sin(deg2rad(data->player.rotationAngle + (90 * data->player.is_move_side))) * moveStep);
-    printf("walkDirection: %f\n", data->player.walkDirection);
-    printf("rotationAngle: %f\n", data->player.rotationAngle);
-    if (data->map[data->player.y / TILE_SIZE][check_x / TILE_SIZE] != '1')
-        data->player.x = check_x;
-    if (data->map[check_y / TILE_SIZE][data->player.x / TILE_SIZE] != '1')
-        data->player.y = check_y;
+        
+        data->player.x += sx *(data->map[data->player.y/TILE_SIZE][(data->player.x + sx)/TILE_SIZE ] != '1');
+        data->player.y += sy *(data->map[(data->player.y + sy)/TILE_SIZE ][data->player.x/TILE_SIZE] != '1');
 }
 
 int update(void *data1)
@@ -73,7 +71,6 @@ int update(void *data1)
     t_data *data;
 
     data = (t_data *)data1;
-    movement_update(data);
     // printf("data animate weapon = %i\n", data->animate_weapon);
     if (data->animate_weapon)
         animate_weapon_shoting(data, data->all_weapons[data->weapon_numb].shoting_end);
@@ -83,7 +80,7 @@ int update(void *data1)
     {
         render_minimap(data);
         castAllrays(data);
-        floor_ceiling(data->game_frame, BLUE, WHITE);
+        floor_ceiling(data->game_frame, data->color[0], data->color[1]);
         render_3d_walls(data);
         create_frame(data, 0, 0);
         take_weapon(data);
@@ -94,6 +91,7 @@ int update(void *data1)
 
     //put the image to the window
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
+    movement_update(data);
     
     return 0;
 }

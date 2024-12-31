@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map_v2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:24:42 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/25 16:06:41 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:58:28 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void p_setup(t_player *p, char **map)
     p->walkDirection = 0;
     p->rotationAngle = get_player_angle(map);
     p->moveSpeed = MOVE_SPEED;
-    p->rotationSpeed = ROTATION_SPEED + 5.5;
+    p->rotationSpeed = ROTATION_SPEED ;
     p->x = (get_player_x(map) * TILE_SIZE) + TILE_SIZE / 2;
     p->y = (get_player_y(map) * TILE_SIZE) + TILE_SIZE / 2;
     p->is_move_side = 0;

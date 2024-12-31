@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/28 13:29:30 by ysahraou         ###   ########.fr       */
+/*   Updated: 2024/12/30 18:02:10 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define RADIUS (TILE_SIZE / 15)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
-# define ROTATION_SPEED 1.5
+# define ROTATION_SPEED 1.3
 # define WEAPON_N 7
 # define MOVE_SPEED 3.5
 # define MOVE_SPEED_MOUSE 1.5
@@ -116,6 +116,7 @@ typedef struct s_ray
 	bool	is_up;
 	bool	is_right;
 	bool	is_left;
+	bool	Was_hit_vertical;
 }				t_rays[NUM_RAYS];
 //player struct
 typedef struct s_player
@@ -165,6 +166,8 @@ typedef struct  s_data
 	int 		map_y;
 	char *txt[4];
 	int color[2];
+	t_img_info *textures[4];
+	t_img_info *door;
 	t_img_info *minimap_img;
 	t_img_info *frame;
     t_img_info *game_frame;
@@ -232,4 +235,6 @@ void draw_line_y(double x, double y, double x1, double y1, t_img_info *img, int 
 void render_3d_walls(t_data *data);
 void castAllrays(t_data *param);
 unsigned int darken_color(unsigned int color, double factor);
+unsigned int get_px_color(t_img_info *img, int x, int y);
+int init_textures(t_data *data,char **txt);
 #endif
