@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 18:02:10 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:47:08 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,9 @@ int key_r(int keycode, void *var);
 double deg2rad(double x);
 double normalizeAngle(double angle);
 void p_setup(t_player *p, char **map);
-int setup(int argc, char **argv, t_data * d);
+int setup(char **argv, t_data *d);
 int	find_longest_row(char **map);
-void free_arr(void **arr, int i);
+void free_arr(void **arr, int i, int flag);
 int get_player_x(char **map);
 int get_player_y(char **map);
 void intialize_data(t_data *data, char **map, void *mlx, void *mlx_win);
@@ -236,5 +236,5 @@ void render_3d_walls(t_data *data);
 void castAllrays(t_data *param);
 unsigned int darken_color(unsigned int color, double factor);
 unsigned int get_px_color(t_img_info *img, int x, int y);
-int init_textures(t_data *data,char **txt);
+int init_textures(t_data *data,char **txt , int i);
 #endif

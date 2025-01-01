@@ -6,17 +6,12 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/30 16:27:48 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:49:12 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
-/*
-	- CHECK THE BOUNDARIES OF THE MAP
-	TODO : flood fill to check if the map is open
-	-UPDATE THE STRUCT WITH 2D MAP
-*/
-//check the edges of the map
+
 int	find_longest_row(char **map)
 {
 	int	i;
@@ -121,7 +116,7 @@ void get_player(char **map, int *x, int *y)
 	return;
 }
 //free the int array
-void free_arr(void **arr, int i)
+void free_arr(void **arr, int i, int flag)
 {
 	if(!arr)
 		return;
@@ -131,21 +126,18 @@ void free_arr(void **arr, int i)
 		free(arr[i]);
 		i++;
 	}
-	free(arr);
+	if(flag)
+		free(arr);
 }
 //function that check each cell of the map and look in all directions if it is open
-int check_map(char **map)
+int check_map(char **map, size_t i, size_t j)
 {
-	size_t i;
-	size_t j;
-
-	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
-			if(map[i][j] == '0')
+			if(map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
 			{
 				if(j == 0 ||(j > 0 && map[i][j - 1] == ' ') || (j > 0 && map[i][j + 1] == ' ') \
 				|| (j > 0 && map[i][j + 1] == '\0')|| i == 0 || (i > 0 && map[i - 1][j] == ' ' )\
@@ -160,77 +152,57 @@ int check_map(char **map)
 	}
 	return(true);
 }
-int read_map(int fd, t_data *data)
+int finalize_map(int fd, t_data *data, int i[2], char *full)
 {
-	char *full;
-    char *read;
-	char *tmp;
 	int item;
-	int j;
-
-    j = 0;
-	item = 0;
-    read = get_next_line(fd);
-	full = ft_strdup("\n");
-	while (read)
-	{
-		if(read[0] == '\n')
-		{
-			free(read);
-			read = get_next_line(fd);
-			continue;
-		}
-		//parse each line of the map if it contains only 1, 0, N, S, E, W
-		if(!line_processing(read, &item, 1))
-		{
-			free(read);
-			free(full);
-			close(fd);
-			return(false);
-		}
-		//if not return 1
-		tmp = full;
-		full = ft_strjoin(full, read);
-		free(read);
-		free(tmp);
-		read = get_next_line(fd);
-		j++;
-	}
+	int j ;
+	
+	item = i[0];
+	j = i[1];
 	if(!item || item > 1)
 	{
 		free(full);
 		close(fd);
 		return(false);
 	}
-
 	data->map = ft_split(full, '\n');
-	//printf map with number of columns
-	// for (int i = 0; data->map[i]; i++)
-	// {
-	// 	printf("map[%d] = %s\n", i, data->map[i]);
-	// }
-	// exit(1);
 	free(full);
-	int start_x;
-	int start_y;
-
-	start_x =0;
-	start_y = 0;
 	data->map_y = j;
 	data->map_x = find_longest_row(data->map);
-	get_player(data->map, &start_y, &start_x);
-	// printf("start_x = %d start_y = %d\n", start_x, start_y);
-	//change bfs to function that check each cell and look in all directions if it is open
-	if(!check_map(data->map))
-	{
-		printf("check map is false\n");
-		free_arr((void **)data->map, j);
-		return(false);
-	}
+	if(!check_map(data->map, 0 , 0))
+		return(free_arr((void **)data->map, j, 1),false);
 	close(fd);
 	print_map(data->map);
 	return(true);
 }
+int read_map(int fd, t_data *data, int i[2], char *str[3])
+{
+	str[0] = get_next_line(fd);
+	str[1] = ft_strdup("\n");
+	while (str[0])
+	{
+		if(str[0][0] == '\n')
+		{
+			free(str[0]);
+			str[0] = get_next_line(fd);
+			continue;
+		}
+		if(!line_processing(str[0], &i[0], 1))
+		{
+			free(str[0]);
+			free(str[1]);
+			return(close(fd), false);
+		}
+		str[2] = str[1];
+		str[1] = ft_strjoin(str[1], str[0]);
+		free(str[0]);
+		free(str[2]);
+		str[0] = get_next_line(fd);
+		i[1]++;
+	}
+	return finalize_map(fd, data, i, str[1]);
+}
+
 void print_char_arr(char **arr)
 {
 	for(int i = 0; arr[i]; i++)
@@ -256,78 +228,80 @@ int check_color(int mod, char *col, t_data *data)
 	int check;
 	int i;
 	int c[3];
+	char *test; 
 
 	i = 0;
+	test = ft_strrchr(col, ',');
+	if(*(test + 1) == '\0')
+		return(false);
 	tmp =ft_split(col, ',');
 	while (i < 3)
 	{
 		check = ft_atoi(tmp[i]);
 		if(!(check >= 0  && check < 255))
-		{
-			//free the array
-			printf("i am here %i\n", check);
-			return(false);
-		}
+			return(free_arr((void *)tmp, 0, 1), false);
 		c[i] = check;
 		i++;
 	}
  	if(tmp[i])
-		return(false);
-	free_arr((void *)tmp, 0);
+		return(free_arr((void *)tmp, 0, 1), false);
+	free_arr((void *)tmp, 0, 1);
 	data->color[mod] = create_trgb(0, c[0], c[1], c[2]);
 	return(true);
 }
-int provide_config(t_data *data, char **arr)
+int provide_config(t_data *data, char **arr, char *t, char **tmp)
 {
-	char **tmp;
-	char *t;
-	int i ;
-	int j ;
-	int op;
+	int i[3];
 
-	i = 0;
-	while (i < 6)
+	i[0] = 0;
+	while (i[0] < 6)
 	{
-		tmp = ft_split(arr[i], ' ');
+		tmp = ft_split(arr[i[0]], ' ');
 		if(!tmp || !tmp[1] || (tmp[1] && tmp[2]))
-		{
-			//free the array
 			return(false);
-		}
 		t = tmp[1];
 		tmp[1] = ft_strtrim(tmp[1], "\n");
 		free(t);
-		op = open(tmp[1], 0644);
-		if(op < 0 && i < 4)
-		{
-			//free the array
+		i[2] = open(tmp[1], 0644);
+		if(i[2] < 0 && i[0] < 4)
 			return(false);
-		}
-		j = line_processing(arr[i], NULL, 0);
-		if(j < 6)
-			data->txt[j - 2] = ft_strdup(tmp[1]);
+		i[1]= line_processing(arr[i[0]], NULL, 0);
+		if(i[1]< 6)
+			data->txt[i[1]- 2] = ft_strdup(tmp[1]);
 		else
 		{
-			if(!check_color(i - 4, tmp[1], data))
-			{
-				//free the array
+			if(!check_color(i[0] - 4, tmp[1], data))
 				return(false);
-			}
 		}
-		i++;
+		i[0]++;
 	}
 	return(true);
 }
+int process_texture_line(char *read, char **arr, int *tot, int fd)
+{
+	int ret;
+
+	ret = line_processing(read, NULL, 0);
+	if(!ret)
+	{
+		free_arr((void **)arr, 0, 0);
+		free(read);
+		close(fd);
+		return (false);
+	}
+	*tot += ret;
+	arr[ret-2] = ft_strdup(read);
+	free(read);
+	return (true);
+}
 int read_textures_colors(t_data *data, int fd)
 {
-    char *read;
+	char *read;
 	char *arr[7];
-	int ret;
 	int tot;
 
-
 	tot = 0;
-    read = get_next_line(fd);
+	read = get_next_line(fd);
 	init_arr(arr);
 	while (read)
 	{
@@ -337,35 +311,18 @@ int read_textures_colors(t_data *data, int fd)
 			read = get_next_line(fd);
 			continue;
 		}
-		ret = line_processing(read, NULL, 0);
-		if(!ret)
-		{
-			free(read);
-			close(fd);
-			return(false);
-		}
-		tot += ret;
-		arr[ret-2] = ft_strdup(read);
-		free(read);
+		if (!process_texture_line(read, arr, &tot, fd))
+			return (false);
 		if(arr[0] && arr[1] && arr[2] && arr[3] && arr[4] && arr[5])
 			break;
 		read = get_next_line(fd);
 	}
-	if(tot > 27)
-	{
-		//free the arr
-		printf("false config\n");
-		return(false);
-	}
+	if(tot > 27 || provide_config(data, arr, NULL, NULL))
+		return(free_arr((void **)arr, 0, 0),false);
 	print_char_arr(arr);
-	if(provide_config(data, arr))
-	{
-		//free the array
-		return(false);
-	}
-	return(true);
+	return(free_arr((void **)arr, 0, 0), true);
 }
-//print the config
+
 void print_config(t_data *data)
 {
 	for(int i = 0; i < 4; i++)
@@ -375,10 +332,8 @@ void print_config(t_data *data)
 	printf("%d\n", data->color[0]);
 	printf("%d\n", data->color[1]);
 }
-int init_textures(t_data *data,char **txt)
+int init_textures(t_data *data,char **txt , int i)
 {
-	int i = 0;
-
 	while (i < 4)
 	{
 		data->textures[i] = (t_img_info *)malloc(sizeof(t_img_info));
@@ -386,9 +341,7 @@ int init_textures(t_data *data,char **txt)
 		data->textures[i]->img_width = 64;
 		data->textures[i]->img = mlx_xpm_file_to_image(data->mlx, txt[i], &data->textures[i]->img_height, &data->textures[i]->img_width);
 		if(data->textures[i]->img == NULL)
-		{
 			return(false);
-		}
 		data->textures[i]->addr = mlx_get_data_addr(data->textures[i]->img, &data->textures[i]->bits_per_pixel, &data->textures[i]->line_length, &data->textures[i]->endian);
 		i++;
 	}
@@ -397,9 +350,7 @@ int init_textures(t_data *data,char **txt)
 	data->door->img_width = 64;
 	data->door->img = mlx_xpm_file_to_image(data->mlx, "./wall_txt/Black4 copy.xpm", &data->door->img_height, &data->door->img_width);
 	if(data->door->img == NULL)
-	{
 		return(false);
-	}
 	printf("door\n");
 	data->door->addr = mlx_get_data_addr(data->door->img, &data->door->bits_per_pixel, &data->door->line_length, &data->door->endian);
 	return(true);
@@ -409,14 +360,16 @@ int check_extension(char *file)
 	char *tmp;
 
 	tmp = ft_strrchr(file, '.');
-	if (*file == '.' || !tmp || !ft_strnstr(tmp, ".cub", 4))
+	if (*file == '.' || !tmp || ft_strncmp(tmp, ".cub", 5))
 		return(false);
 	return(true);
 }
-int setup(int argc, char **argv, t_data *d)
+int setup(char **argv, t_data *d)
 {
-	(void)argc;
-	//check extension
+	int i[2];
+	char *str[3];	
+	i[0] = 0;
+	i[1] = 0;
 	if(!check_extension(argv[1]))
 	{
 		printf("Error\nFile extension is not correct must be *.cub\n");
@@ -425,15 +378,14 @@ int setup(int argc, char **argv, t_data *d)
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
-	//TODO check file name extension in the config file
-	//todo check if there is a gap in the map
+
 	if(read_textures_colors(d, fd))
 	{
 		close(fd);
 		printf("false textures\n");
 		return(false);
 	}
-	if(!read_map(fd, d))
+	if(!read_map(fd, d, i, str))
 	{
 		printf("false map\n");
 		return(false); 

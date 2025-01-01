@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/30 16:29:20 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:47:42 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int main(int argc, char **argv)
         return printf("Error There is no map\n");
     else
         printf("Config file name : %s\n", argv[1]);
-    if(!setup(argc, argv, &data))
+    if(!setup(argv, &data))
     {
         return(1);
     }
     intialize_data(&data, data.map, 0, 0);
     init_weapon_names(&data);
     init_weapons(&data);
-    if(!init_textures(&data, data.txt))
+    if(!init_textures(&data, data.txt, 0))
 	{
 		printf("mlx_xpm_to_image fails\n");
 		return(false);
