@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2024/12/31 15:40:49 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/01 15:24:39 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	is_wall(float x, float y, char **map, t_data *data, int mod)
 		return(1);
     if (map[map_grid_y][map_grid_x] == 'D' && distance(data->player.x, data->player.y, x, y) <= TILE_SIZE * 2 && mod == 1)
     {
-        // printf("You Win\n");
         if (map_grid_x == data->player.x / TILE_SIZE || map_grid_y == data->player.y / TILE_SIZE)
         {
             if (map_grid_x + 1 == data->player.x / TILE_SIZE)
@@ -47,132 +46,137 @@ int	is_wall(float x, float y, char **map, t_data *data, int mod)
     }
     return(map[map_grid_y][map_grid_x] == '1' || map[map_grid_y][map_grid_x] == 'D');
 }
+void horizontal_interception(t_data *param, int i, double rayAngle, int *foundHits, int *hits)
+{
+    double intercepts[2];
+    double steps[2];
+    int p[1] = {0};
 
+    intercepts[1] = floor(param->player.y / TILE_SIZE) * TILE_SIZE;
+    if (param->rays[i].is_down)
+        intercepts[1] += TILE_SIZE;
+    intercepts[0] = param->player.x + ((intercepts[1] - param->player.y) / tan(deg2rad(rayAngle)));
+
+    steps[1] = (double)TILE_SIZE;
+    if (param->rays[i].is_up)
+        steps[1] *= -1;
+    steps[0] = (double)TILE_SIZE / tan(deg2rad(rayAngle));
+    if (param->rays[i].is_left && steps[0] > 0)
+        steps[0] *= -1;
+    if (param->rays[i].is_right && steps[0] < 0)
+        steps[0] *= -1;
+    if (param->rays[i].is_up)
+        p[0] = 1;
+
+    while (intercepts[0] >= 0 && intercepts[0] < param->minimap_img->img_width \
+            && intercepts[1] >= 0 && intercepts[1] < param->minimap_img->img_height)
+    {
+        if(is_wall(intercepts[0], intercepts[1] - p[0], param->map, param, 1))
+        {
+            foundHits[0] = 1;
+            hits[0] = intercepts[0];
+            hits[1] = intercepts[1] - p[0];
+            break;
+        }
+        intercepts[1] += steps[1];
+        intercepts[0] += steps[0];
+    }
+}
+
+void vertical_interception(t_data *param, int i, double rayAngle, int *foundHits, int *hits)
+{
+    double intercepts[2];
+    double steps[2];
+    int p[1] = {0};
+
+    intercepts[0] = floor(param->player.x / TILE_SIZE) * TILE_SIZE;
+    if (param->rays[i].is_right)
+        intercepts[0] += TILE_SIZE;
+    intercepts[1] = param->player.y + (intercepts[0] - param->player.x) * tan(deg2rad(rayAngle));
+
+    steps[0] = (double)TILE_SIZE;
+    if (param->rays[i].is_left)
+        steps[0] *= -1;
+    steps[1] = (double)TILE_SIZE * tan(deg2rad(rayAngle));
+    if (param->rays[i].is_up && steps[1] > 0)
+        steps[1] *= -1;
+    if (param->rays[i].is_down && steps[1] < 0)
+        steps[1] *= -1;
+    if (param->rays[i].is_left)
+        p[0] = 1;
+
+    while (intercepts[0] >= 0 && intercepts[0] < param->minimap_img->img_width \
+            && intercepts[1] >= 0 && intercepts[1] < param->minimap_img->img_height)
+    {
+        if(is_wall(intercepts[0] - p[0], intercepts[1], param->map, param, 1))
+        {
+            foundHits[1] = 1;
+            hits[2] = intercepts[0] - p[0];
+            hits[3] = intercepts[1];
+            break;
+        }
+        intercepts[1] += steps[1];
+        intercepts[0] += steps[0];
+    }
+}
+
+void calculate_distances(t_data *param, int *foundHits, int *hits, double *distances)
+{
+    if (foundHits[0])
+        distances[0] = distance(param->player.x, param->player.y, hits[0], hits[1]);
+    else 
+        distances[0] = INT_MAX;
+    if (foundHits[1])
+        distances[1] = distance(param->player.x, param->player.y, hits[2], hits[3]);
+    else 
+        distances[1] = INT_MAX;
+    distances[0] += distances[0] == 0;
+    distances[1] += distances[1] == 0;
+}
+
+void castray(t_data *param, int i, double rayAngle)
+{
+    int foundHits[2] = {0, 0};
+    int hits[4] = {0, 0, 0, 0};
+    double distances[2] = {0, 0};
+
+    rayAngle = normalizeAngle(rayAngle);
+    param->rays[i].angle = rayAngle;
+    param->rays[i].is_down = rayAngle > 0 && rayAngle < 180;
+    param->rays[i].is_up = (rayAngle > 180 && rayAngle < 360);
+    param->rays[i].is_right = rayAngle < 90 || rayAngle > 270;
+    param->rays[i].is_left = (rayAngle > 90 && rayAngle < 270);
+    param->rays[i].column_id = i;
+
+    horizontal_interception(param, i, rayAngle, foundHits, hits);
+    vertical_interception(param, i, rayAngle, foundHits, hits);
+    calculate_distances(param, foundHits, hits, distances);
+
+    if (distances[0] < distances[1])
+    {
+        param->rays[i].distance = distances[0];
+        param->rays[i].hit_x = hits[0];
+        param->rays[i].hit_y = hits[1];
+        param->rays[i].Was_hit_vertical = 0;
+    }
+    else
+    {
+        param->rays[i].distance = distances[1];
+        param->rays[i].hit_x = hits[2];
+        param->rays[i].hit_y = hits[3];
+        param->rays[i].Was_hit_vertical = 1;
+    }
+}
 void castAllrays(t_data *param)
 {
     int i;
-    double xintercept;
-    double yintercept;
-    double xstep;
-    double ystep;
-    int Hhitx = 0;
-    int Hhity = 0;
-    int Vhitx = 0;
-    int Vhity = 0;
-    int foundHwallhit;
-    int foundVwallhit;
-    double Hdistance = 0;
-    double Vdistance = 0;
-    int px;
-    int py;
     double rayAngle;
 
     rayAngle = param->player.rotationAngle - (FOV / 2);
     i = 0;
-    // int count = 0;
     while (i < NUM_RAYS)
     {
-        foundHwallhit = 0;
-        foundVwallhit = 0;
-        Hdistance = 0;
-        Hdistance = 0;
-        px = 0;
-        py = 0;
-        rayAngle = normalizeAngle(rayAngle);
-        param->rays[i].angle = rayAngle;
-        param->rays[i].is_down = rayAngle > 0 && rayAngle < 180;
-        param->rays[i].is_up = (rayAngle > 180 && rayAngle < 360);
-        param->rays[i].is_right = rayAngle < 90 || rayAngle > 270;
-        param->rays[i].is_left = (rayAngle > 90 && rayAngle < 270);
-        param->rays[i].column_id = i;
-
-
-        //horizontal interception
-        yintercept = floor(param->player.y / TILE_SIZE) * TILE_SIZE;
-        if (param->rays[i].is_down)
-            yintercept += TILE_SIZE;
-        xintercept = param->player.x + ((yintercept - param->player.y) / tan(deg2rad(rayAngle)));
-
-        //xstep and ystep
-        ystep = (double)TILE_SIZE;
-        if (param->rays[i].is_up)
-            ystep *= -1;
-        xstep = (double)TILE_SIZE / tan(deg2rad(rayAngle));
-        if (param->rays[i].is_left && xstep > 0)
-            xstep *= -1;
-        if (param->rays[i].is_right && xstep < 0)
-            xstep *= -1;
-        if (param->rays[i].is_up)
-            py = 1;
-        while (xintercept >= 0 && xintercept < param->minimap_img->img_width \
-                && yintercept >= 0 && yintercept < param->minimap_img->img_height)
-        {
-            if(is_wall(xintercept, yintercept - py, param->map, param, 1))
-			{
-                foundHwallhit = 1;
-                Hhitx = xintercept;
-                Hhity = yintercept - py;
-                break;
-            }
-            yintercept += ystep;
-            xintercept += xstep;
-        }
-
-        // vertical interception
-        xintercept = floor(param->player.x / TILE_SIZE) * TILE_SIZE;
-        if (param->rays[i].is_right)
-            xintercept += TILE_SIZE;
-        yintercept = param->player.y + (xintercept - param->player.x) * tan(deg2rad(rayAngle));
-        // xstep and ystep
-        xstep = (double)TILE_SIZE;
-        if (param->rays[i].is_left)
-            xstep *= -1;
-        ystep = (double)TILE_SIZE * tan(deg2rad(rayAngle));
-        if (param->rays[i].is_up && ystep > 0)
-            ystep *= -1;
-        if (param->rays[i].is_down && ystep < 0)
-            ystep *= -1;
-        if (param->rays[i].is_left)
-            px = 1;
-        while (xintercept >= 0 && xintercept < param->minimap_img->img_width \
-                && yintercept >= 0 && yintercept < param->minimap_img->img_height)
-        {
-			if(is_wall(xintercept - px, yintercept , param->map, param, 1))
-            {
-                foundVwallhit = 1;
-                Vhitx = xintercept - px;
-                Vhity = yintercept;
-                break;
-            }
-            yintercept += ystep;
-            xintercept += xstep;
-        }
-        if (foundHwallhit)
-            Hdistance = distance(param->player.x, param->player.y, Hhitx, Hhity);
-        else 
-            Hdistance = INT_MAX;
-        if (foundVwallhit)
-            Vdistance = distance(param->player.x, param->player.y, Vhitx, Vhity);
-        else 
-            Vdistance = INT_MAX;
-		Hdistance += Hdistance == 0;
-		Vdistance += Vdistance == 0;
-        
-        if (Hdistance < Vdistance)
-        {
-            param->rays[i].distance = Hdistance;
-            param->rays[i].hit_x = Hhitx;
-            param->rays[i].hit_y = Hhity;
-            param->rays[i].Was_hit_vertical = 0;
-        }
-        else
-        {
-            param->rays[i].distance = Vdistance;
-            param->rays[i].hit_x = Vhitx;
-            param->rays[i].hit_y = Vhity;
-            param->rays[i].Was_hit_vertical = 1;
-        }
-        // draw_line_y(param->player.x , param->player.y ,  param->rays[i].hit_x ,  param->rays[i].hit_y , param->minimap_img, PINK);
+        castray(param, i, rayAngle);
         rayAngle += (double)(FOV) / (double)(NUM_RAYS);
         i++;
     }
