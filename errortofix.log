@@ -1,2 +1,5 @@
 lines betwen the map
-fix symbols when 
+fix symbols in color fix
+//fix conditional jump 76:renderframes
+//fixinitialze data->txt with null
+//free one byte in get_next_line

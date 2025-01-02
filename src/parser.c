@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/01 12:49:12 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/02 22:03:43 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,42 @@ void get_player(char **map, int *x, int *y)
 //free the int array
 void free_arr(void **arr, int i, int flag)
 {
+	int flag2;
+
+	if(i)
+		flag2 = 1;
+	else
+		flag2 = 0;
 	if(!arr)
 		return;
-	i = 0;
-	while (arr[i])
+	if(!i)
+		i = 0;
+	while ((flag2 && i >= 0) || (!flag2 && arr[i]) )
 	{
+		printf("freeing %d ", i);
 		free(arr[i]);
-		i++;
+		if(flag2)
+			i--;
+		else
+			i++;
 	}
 	if(flag)
 		free(arr);
 }
+void free_txt(char ** arr)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if(arr[i])
+			free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+}
+
 //function that check each cell of the map and look in all directions if it is open
 int check_map(char **map, size_t i, size_t j)
 {
@@ -211,9 +236,9 @@ void print_char_arr(char **arr)
 	}
 }
 //memset the array of textures with 0
-void init_arr(char **arr)
+void init_arr(char **arr, int l)
 {
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < l; i++)
 	{
 		arr[i] = 0;
 	}
@@ -258,21 +283,28 @@ int provide_config(t_data *data, char **arr, char *t, char **tmp)
 	{
 		tmp = ft_split(arr[i[0]], ' ');
 		if(!tmp || !tmp[1] || (tmp[1] && tmp[2]))
-			return(false);
+			return(free_arr((void **)tmp, 0, 1), false);
 		t = tmp[1];
 		tmp[1] = ft_strtrim(tmp[1], "\n");
 		free(t);
 		i[2] = open(tmp[1], 0644);
 		if(i[2] < 0 && i[0] < 4)
-			return(false);
+		{
+			free_txt(data->txt);
+			return(free_arr((void **)tmp, 0, 1), false);
+		}
 		i[1]= line_processing(arr[i[0]], NULL, 0);
 		if(i[1]< 6)
 			data->txt[i[1]- 2] = ft_strdup(tmp[1]);
 		else
 		{
 			if(!check_color(i[0] - 4, tmp[1], data))
-				return(false);
+			{
+				free_txt(data->txt);
+				return(free_arr((void **)tmp, 0, 1), false);
+			}
 		}
+		free_arr((void **)tmp, 0, 1);
 		i[0]++;
 	}
 	return(true);
@@ -284,10 +316,9 @@ int process_texture_line(char *read, char **arr, int *tot, int fd)
 	ret = line_processing(read, NULL, 0);
 	if(!ret)
 	{
-		free_arr((void **)arr, 0, 0);
 		free(read);
 		close(fd);
-		return (false);
+		return(free_arr((void **)arr, 6, 0),false);
 	}
 	*tot += ret;
 	arr[ret-2] = ft_strdup(read);
@@ -302,9 +333,11 @@ int read_textures_colors(t_data *data, int fd)
 
 	tot = 0;
 	read = get_next_line(fd);
-	init_arr(arr);
+	init_arr(arr, 7);
+	init_arr(data->txt, 4);
 	while (read)
 	{
+		printf("read %s\n", read);
 		if(read[0] == '\n')
 		{
 			free(read);
@@ -312,12 +345,12 @@ int read_textures_colors(t_data *data, int fd)
 			continue;
 		}
 		if (!process_texture_line(read, arr, &tot, fd))
-			return (false);
+			return(false);
 		if(arr[0] && arr[1] && arr[2] && arr[3] && arr[4] && arr[5])
 			break;
 		read = get_next_line(fd);
 	}
-	if(tot > 27 || provide_config(data, arr, NULL, NULL))
+	if(tot > 27 || !provide_config(data, arr, NULL, NULL))
 		return(free_arr((void **)arr, 0, 0),false);
 	print_char_arr(arr);
 	return(free_arr((void **)arr, 0, 0), true);
@@ -351,8 +384,9 @@ int init_textures(t_data *data,char **txt , int i)
 	data->door->img = mlx_xpm_file_to_image(data->mlx, "./wall_txt/Black4 copy.xpm", &data->door->img_height, &data->door->img_width);
 	if(data->door->img == NULL)
 		return(false);
-	printf("door\n");
 	data->door->addr = mlx_get_data_addr(data->door->img, &data->door->bits_per_pixel, &data->door->line_length, &data->door->endian);
+	//FIX why segfault
+	free_txt(data->txt);
 	return(true);
 }
 int check_extension(char *file)
@@ -379,15 +413,17 @@ int setup(char **argv, t_data *d)
 	if(fd < 0)
 		return(false);
 
-	if(read_textures_colors(d, fd))
+	if(!read_textures_colors(d, fd))
 	{
 		close(fd);
-		printf("false textures\n");
+		printf("Error\nfalse textures or colors\n");
+		//free the data->txt
 		return(false);
 	}
 	if(!read_map(fd, d, i, str))
 	{
-		printf("false map\n");
+		printf("Error\nfalse map\n");
+		free_txt(d->txt);
 		return(false); 
 	}
 	return(true);
