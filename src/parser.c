@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/02 22:03:43 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:59:51 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -428,3 +428,4 @@ int setup(char **argv, t_data *d)
 	}
 	return(true);
 }
+
