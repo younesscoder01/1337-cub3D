@@ -59,6 +59,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*left;
 
+	if(fd == -1)
+		free(left);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));

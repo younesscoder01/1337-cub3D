@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_err_handling.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:11:06 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/31 15:43:18 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:31:19 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int close_win(void *data1)
     free_weapon_names(data);
     //final
     mlx_destroy_display(data->mlx);
+    //MY PART
+    destroy_img(data->mlx,data->textures[0]);
+    destroy_img(data->mlx,data->textures[1]);
+    destroy_img(data->mlx,data->textures[2]);
+    destroy_img(data->mlx,data->textures[3]);
+
     free(data->mlx);
     exit(1);
 }

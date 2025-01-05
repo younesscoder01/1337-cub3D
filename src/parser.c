@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/03 15:59:51 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/05 16:56:45 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void free_arr(void **arr, int i, int flag)
 		i = 0;
 	while ((flag2 && i >= 0) || (!flag2 && arr[i]) )
 	{
-		printf("freeing %d ", i);
 		free(arr[i]);
 		if(flag2)
 			i--;
@@ -200,30 +199,88 @@ int finalize_map(int fd, t_data *data, int i[2], char *full)
 	print_map(data->map);
 	return(true);
 }
-int read_map(int fd, t_data *data, int i[2], char *str[3])
+int process_newline(char *line, int fd, int i)
 {
-	str[0] = get_next_line(fd);
+	if (i > 0 && line[i] == '\0')
+	{
+		int j = 0;
+		free(line);
+		line = get_next_line(fd);
+		if(!line)
+			return (2);
+		while (line)
+		{
+			while (line[j])
+			{
+				if (line[j] != ' ' && line[j] != '\n' && line[j] != '\t')
+					return(free(line), false);
+				j++;
+			}
+			free(line);
+			line = get_next_line(fd);
+			if(!line)
+				return (2);
+		}
+	}
+	return (true);
+}
+char *skip_new_line(int fd)
+{
+	int i;
+	char *line;
+
+	i = 0;
+	line = get_next_line(fd);
+	while (line)
+	{
+		while (line[i] && (line[i] == '\n' || line[i] == ' ' || line[i] == '\t'))
+			i++;
+		if(line[i] != '\0')
+			break;
+		free(line);
+		line = get_next_line(fd);
+	}
+	return(line);
+}
+int read_map(int fd, t_data *data, int i[4], char *str[3])
+{
+	str[0] = skip_new_line(fd);
+	if(!str[0])
+		return(false);
 	str[1] = ft_strdup("\n");
 	while (str[0])
 	{
-		if(str[0][0] == '\n')
+		i[2] = 0;
+		while (str[0][i[2]] && (str[0][i[2]] == '\n' || str[0][i[2]] == ' ' || str[0][i[2]] == '\t'))
+			i[2]++;
+		i[3] = process_newline(str[0], fd, i[2]);
+		if(i[3] == 2)
 		{
-			free(str[0]);
-			str[0] = get_next_line(fd);
-			continue;
+				printf("IAM HERE\n");
+				return finalize_map(fd, data, i, str[1]);
 		}
-		if(!line_processing(str[0], &i[0], 1))
+		else if(!i[3])
 		{
-			free(str[0]);
 			free(str[1]);
+			get_next_line(-1);
 			return(close(fd), false);
 		}
-		str[2] = str[1];
-		str[1] = ft_strjoin(str[1], str[0]);
-		free(str[0]);
-		free(str[2]);
-		str[0] = get_next_line(fd);
-		i[1]++;
+		else
+		{
+			if(!line_processing(str[0], &i[0], 1))
+			{
+				free(str[0]);
+				free(str[1]);
+				get_next_line(-1);
+				return(close(fd), false);
+			}
+			str[2] = str[1];
+			str[1] = ft_strjoin(str[1], str[0]);
+			free(str[0]);
+			free(str[2]);
+			str[0] = get_next_line(fd);
+			i[1]++;
+		}
 	}
 	return finalize_map(fd, data, i, str[1]);
 }
@@ -337,7 +394,6 @@ int read_textures_colors(t_data *data, int fd)
 	init_arr(data->txt, 4);
 	while (read)
 	{
-		printf("read %s\n", read);
 		if(read[0] == '\n')
 		{
 			free(read);
@@ -345,13 +401,13 @@ int read_textures_colors(t_data *data, int fd)
 			continue;
 		}
 		if (!process_texture_line(read, arr, &tot, fd))
-			return(false);
+			return(get_next_line(-1),false);
 		if(arr[0] && arr[1] && arr[2] && arr[3] && arr[4] && arr[5])
 			break;
 		read = get_next_line(fd);
 	}
 	if(tot > 27 || !provide_config(data, arr, NULL, NULL))
-		return(free_arr((void **)arr, 0, 0),false);
+		return(get_next_line(-1),free_arr((void **)arr, 0, 0),false);
 	print_char_arr(arr);
 	return(free_arr((void **)arr, 0, 0), true);
 }
@@ -400,10 +456,11 @@ int check_extension(char *file)
 }
 int setup(char **argv, t_data *d)
 {
-	int i[2];
+	int i[4];
 	char *str[3];	
 	i[0] = 0;
 	i[1] = 0;
+	i[2] = 0;
 	if(!check_extension(argv[1]))
 	{
 		printf("Error\nFile extension is not correct must be *.cub\n");
@@ -420,6 +477,7 @@ int setup(char **argv, t_data *d)
 		//free the data->txt
 		return(false);
 	}
+	//skip new lines
 	if(!read_map(fd, d, i, str))
 	{
 		printf("Error\nfalse map\n");
