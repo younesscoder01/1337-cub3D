@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:11:06 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/05 17:31:19 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:48:32 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,15 @@ int close_win(void *data1)
     free_weapon_imgs(data);
     free_weapon_names(data);
     //final
-    mlx_destroy_display(data->mlx);
     //MY PART
-    destroy_img(data->mlx,data->textures[0]);
-    destroy_img(data->mlx,data->textures[1]);
-    destroy_img(data->mlx,data->textures[2]);
-    destroy_img(data->mlx,data->textures[3]);
+    destroy_img(data->mlx, data->textures[0]);
+    destroy_img(data->mlx, data->textures[1]);
+    destroy_img(data->mlx, data->textures[2]);
+    destroy_img(data->mlx, data->textures[3]);
+    destroy_img(data->mlx, data->door);
 
+    mlx_destroy_display(data->mlx);
+    free_arr((void **)data->map, 0, 1);
     free(data->mlx);
     exit(1);
 }
