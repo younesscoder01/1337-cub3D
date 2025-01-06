@@ -7,7 +7,7 @@ SO ./wall_txt/Blue19.xpm
 WE ./wall_txt/Blue19.xpm
 
 F 220,100,2
-C 254,254,254
+C 0,0,0
 
 
 
