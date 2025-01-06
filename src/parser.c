@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/05 16:56:45 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/06 10:45:08 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,47 +242,39 @@ char *skip_new_line(int fd)
 	}
 	return(line);
 }
-int read_map(int fd, t_data *data, int i[4], char *str[3])
+void advance_nl(char *str, int *i)
 {
-	str[0] = skip_new_line(fd);
-	if(!str[0])
+	*i = 0;
+	while (str[*i] && (str[*i] == '\n' || str[*i] == ' ' || str[*i] == '\t'))
+		*i = *i + 1;
+}
+int read_map(int fd, t_data *data, int i[4], char *s[3])
+{
+	s[0] = skip_new_line(fd);
+	if(!s[0])
 		return(false);
-	str[1] = ft_strdup("\n");
-	while (str[0])
+	s[1] = ft_strdup("\n");
+	while (s[0])
 	{
-		i[2] = 0;
-		while (str[0][i[2]] && (str[0][i[2]] == '\n' || str[0][i[2]] == ' ' || str[0][i[2]] == '\t'))
-			i[2]++;
-		i[3] = process_newline(str[0], fd, i[2]);
+		advance_nl(s[0], &i[2]);
+		i[3] = process_newline(s[0], fd, i[2]);
 		if(i[3] == 2)
-		{
-				printf("IAM HERE\n");
-				return finalize_map(fd, data, i, str[1]);
-		}
+				return finalize_map(fd, data, i, s[1]);
 		else if(!i[3])
-		{
-			free(str[1]);
-			get_next_line(-1);
-			return(close(fd), false);
-		}
+			return(get_next_line(-1),free(s[1]),close(fd), false);
 		else
 		{
-			if(!line_processing(str[0], &i[0], 1))
-			{
-				free(str[0]);
-				free(str[1]);
-				get_next_line(-1);
-				return(close(fd), false);
-			}
-			str[2] = str[1];
-			str[1] = ft_strjoin(str[1], str[0]);
-			free(str[0]);
-			free(str[2]);
-			str[0] = get_next_line(fd);
+			if(!line_processing(s[0], &i[0], 1))	
+				return(free(s[0]),free(s[1]),close(fd),get_next_line(-1), 0);
+			s[2] = s[1];
+			s[1] = ft_strjoin(s[1], s[0]);
+			free(s[0]);
+			free(s[2]);
+			s[0] = get_next_line(fd);
 			i[1]++;
 		}
 	}
-	return finalize_map(fd, data, i, str[1]);
+	return finalize_map(fd, data, i, s[1]);
 }
 
 void print_char_arr(char **arr)
@@ -346,20 +338,14 @@ int provide_config(t_data *data, char **arr, char *t, char **tmp)
 		free(t);
 		i[2] = open(tmp[1], 0644);
 		if(i[2] < 0 && i[0] < 4)
-		{
-			free_txt(data->txt);
-			return(free_arr((void **)tmp, 0, 1), false);
-		}
+			return(free_txt(data->txt),free_arr((void **)tmp, 0, 1), false);
 		i[1]= line_processing(arr[i[0]], NULL, 0);
 		if(i[1]< 6)
 			data->txt[i[1]- 2] = ft_strdup(tmp[1]);
 		else
 		{
-			if(!check_color(i[0] - 4, tmp[1], data))
-			{
-				free_txt(data->txt);
-				return(free_arr((void **)tmp, 0, 1), false);
-			}
+			if(!check_color(i[0] - 4, tmp[1], data))				
+				return(free_txt(data->txt), free_arr((void **)tmp, 0, 1), false);
 		}
 		free_arr((void **)tmp, 0, 1);
 		i[0]++;
@@ -382,13 +368,11 @@ int process_texture_line(char *read, char **arr, int *tot, int fd)
 	free(read);
 	return (true);
 }
-int read_textures_colors(t_data *data, int fd)
+int read_textures_colors(t_data *data, int fd,	int tot)
 {
 	char *read;
 	char *arr[7];
-	int tot;
 
-	tot = 0;
 	read = get_next_line(fd);
 	init_arr(arr, 7);
 	init_arr(data->txt, 4);
@@ -458,26 +442,21 @@ int setup(char **argv, t_data *d)
 {
 	int i[4];
 	char *str[3];	
+	
 	i[0] = 0;
 	i[1] = 0;
 	i[2] = 0;
-	if(!check_extension(argv[1]))
-	{
-		printf("Error\nFile extension is not correct must be *.cub\n");
-		return(false);
-	}
+	if(!check_extension(argv[1]))	
+		return(printf("Error\nFile extension is not correct must be *.cub\n"), false);
 	int fd = open(argv[1], 0644);
 	if(fd < 0)
 		return(false);
 
-	if(!read_textures_colors(d, fd))
+	if(!read_textures_colors(d, fd, 0))
 	{
 		close(fd);
-		printf("Error\nfalse textures or colors\n");
-		//free the data->txt
-		return(false);
+		return(printf("Error\nfalse textures or colors\n"),false);
 	}
-	//skip new lines
 	if(!read_map(fd, d, i, str))
 	{
 		printf("Error\nfalse map\n");
