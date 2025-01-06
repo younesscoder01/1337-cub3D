@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/06 10:45:08 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:56:53 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ int check_color(int mod, char *col, t_data *data)
 	while (i < 3)
 	{
 		check = ft_atoi(tmp[i]);
-		if(!(check >= 0  && check < 255))
+		if(!(check >= 0  && check <= 255))
 			return(free_arr((void *)tmp, 0, 1), false);
 		c[i] = check;
 		i++;
