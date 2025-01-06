@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/01 13:00:53 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:35:09 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
     int i;
     int j;
     double alpha;
-    double beta;
     int shade_color;
 
     i = 0;
-    alpha = 1;
-    beta = 0.000005;
     while (i < img->img_height / 2)
     {
         j = 0;
-        alpha += beta;
+        alpha = (double)i / (double)img->img_height;
         shade_color = darken_color(color1, alpha);
         while (j < img->img_width)
         {
@@ -35,18 +32,21 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
         }
         i++;
     }
-    alpha = 0.05;
+    //beta = 0.000005;
+    alpha = 1;
     while (i < img->img_height)
     {
         j = 0;
-        alpha += beta;
+        alpha += j * 0.1;
         while (j < img->img_width)
         {
             shade_color = darken_color(color2, alpha);
             ft_put_pixel(img, j, i, shade_color);
             j++;
         }
+        alpha = (img->img_height - (double)i) / ((double)img->img_height / 2);
         i++;
+
     }
 }
 
