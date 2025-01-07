@@ -28,15 +28,15 @@
 # include "../libft/libft.h"
 
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 640
+# define WINDOW_HEIGHT 480
 
 /*------------Macros-------------*/
 # define WALL_STRIP_WIDTH 1
 # define FOV 60
 # define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
+// # define WINDOW_WIDTH 800
+// # define WINDOW_HEIGHT 600
 # define TILE_SIZE 64
 # define FRAME_WIDTH (TILE_SIZE * 4)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
