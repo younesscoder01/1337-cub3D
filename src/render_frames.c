@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/01 13:00:53 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:22:44 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void movement_update(t_data *data)
     int check_x, check_y;
     double move_step;
 
+    if (data->mouse_x > 0 && data->mouse_x <= 20 && data->mouse_in == 1)
+        data->player.turnDirection = -1;
+    else if (data->mouse_x <= 800 && data->mouse_x >= 780 && data->mouse_in == 1)
+        data->player.turnDirection = 1;
     data->player.rotationAngle += data->player.turnDirection * data->player.rotationSpeed;
     data->player.rotationAngle = normalizeAngle(data->player.rotationAngle);
     move_step = data->player.moveSpeed * data->player.walkDirection;

@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2024/12/31 15:46:10 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:38:01 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int key_r(int keycode, void *var)
 int mouse_hook(int x, int y, t_data *data)
 {
     (void)y;
+    data->mouse_in = 1;
     if (data->mouse_x < x)
         data->player.turnDirection = 1;
     else if (data->mouse_x > x)
