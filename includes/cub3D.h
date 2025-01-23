@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/23 12:21:25 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/23 22:10:09 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,4 +244,19 @@ void			castAllrays(t_data *param);
 unsigned int	darken_color(unsigned int color, double factor);
 unsigned int	get_px_color(t_img_info *img, int x, int y);
 int				init_textures(t_data *data, char **txt, int i);
+void	init_arr(char **arr, int l);
+int	create_trgb(int t, int r, int g, int b);
+void	get_player(char **map, int *x, int *y);
+int	read_map(int fd, t_data *data, int i[4], char *s[3]);
+void	advance_nl(char *str, int *i);
+char	*skip_new_line(int fd);
+void	free_txt(char **arr);
+int	process_newline(char *line, int fd, int i);
+int	check_color(int mod, char *col, t_data *data);
+int	provide_config(t_data *d, char **arr, char *t, char **tp);
+int	find_longest_row(char **map);
+int	check_boundaries(char **map, size_t map_h);
+int	line_processing(char *str, int *item, int mod);
+int	check_map(char **map, size_t i, size_t j);
+int	finalize_map(int fd, t_data *data, int i[2], char *full);
 #endif

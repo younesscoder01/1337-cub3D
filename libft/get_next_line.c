@@ -53,7 +53,7 @@ char	*fill_line_buffer(int fd, char **leftovers, char *buffer)
 	return (_set_line(leftovers, nbyte));
 }
 
-char	*get_next_line(int fd)
+char	*gnl(int fd)
 {
 	char		*buffer;
 	char		*line;

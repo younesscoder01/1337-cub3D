@@ -8,7 +8,8 @@ OBJDIR = ./obj
 SRC = ./src/cub3D.c ./src/mini_map.c ./src/mini_map_utils.c ./src/render_frames.c \
 		./src/initialize_data.c ./src/close_err_handling.c ./src/sprite_animation.c \
 		./src/sprite_animation_v2.c ./src/keys.c \
-		./src/mini_map_v2.c  ./src/parser.c ./src/initialize_data_01.c \
+		./src/mini_map_v2.c  ./src/parser.c  src/check.c src/check1.c src/check2.c \
+		./src/check_utils.c ./src/initialize_data_01.c \
 		./src/ray_casting.c ./src/math_utils.c  ./src/render_walls.c
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 NAME = cub3D

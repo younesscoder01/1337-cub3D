@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/23 09:55:05 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/23 21:55:13 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ double distance(int x1, int y1, int x2, int y2)
 
 int	is_wall(float x, float y, char **map, t_data *data, int mod)
 {
-	if(x < 0 || y < 0 || (int)y >= data->minimap_img->img_height  || (int)x >= data->minimap_img->img_width)
-		return(1);
 	int map_grid_x;
 	int map_grid_y;
+    
+	if(x < 0 || y < 0 || (int)y >= data->minimap_img->img_height  || (int)x >= data->minimap_img->img_width)
+		return(1);
 	map_grid_x = floor(x / TILE_SIZE);
 	map_grid_y = floor(y / TILE_SIZE);
 	if(ft_strlen(map[map_grid_y]) < (size_t)map_grid_x)
@@ -32,13 +33,7 @@ int	is_wall(float x, float y, char **map, t_data *data, int mod)
     {
         if (map_grid_x == data->player.x / TILE_SIZE || map_grid_y == data->player.y / TILE_SIZE)
         {
-            if (map_grid_x + 1 == data->player.x / TILE_SIZE)
-                return(0);
-            if (map_grid_x - 1 == data->player.x / TILE_SIZE)
-                return(0);
-            if (map_grid_y + 1 == data->player.y / TILE_SIZE)
-                return(0);
-            if (map_grid_y - 1 == data->player.y / TILE_SIZE)
+            if ((map_grid_x + 1 == data->player.x / TILE_SIZE) || (map_grid_x - 1 == data->player.x / TILE_SIZE) ||  (map_grid_y + 1 == data->player.y / TILE_SIZE) || (map_grid_y - 1 == data->player.y / TILE_SIZE))
                 return(0);
         }
         else 
