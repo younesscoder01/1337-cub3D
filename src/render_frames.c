@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/13 09:58:32 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/23 09:59:34 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
         }
         i++;
     }
-    //beta = 0.000005;
     alpha = 1;
     while (i < img->img_height)
     {
