@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/20 10:51:22 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/23 20:43:46 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +161,14 @@ int check_map(char **map, size_t i, size_t j)
 		j = 0;
 		while (map[i][j])
 		{
+
 			if(map[i][j] == '0' || map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W')
 			{
 				if(j == 0 ||(j > 0 && map[i][j - 1] == ' ') || (j > 0 && map[i][j + 1] == ' ') \
 				|| (j > 0 && map[i][j + 1] == '\0')|| i == 0 || (i > 0 && map[i - 1][j] == ' ' )\
 				|| (i > 0 && map[i+1] && j<= ft_strlen(map[i+1]) && map[i + 1][j] == ' ') \
 				|| (i > 0 && map[i+1] && j <= ft_strlen(map[i+1]) && map[i + 1][j] == '\0')\
-				|| (i > 0 && j > ft_strlen(map[i - 1])) || (i > 0 && map[i+1] && j > ft_strlen(map[i + 1])))
+				|| (i > 0 && j > ft_strlen(map[i - 1]) - 1) || (i > 0 && map[i+1] && j > ft_strlen(map[i + 1])))
 					return(false);
 			}
 			j++;

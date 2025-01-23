@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/22 20:54:47 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:21:25 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define M_PI 3.14159265358979323846
 # define ROTATION_SPEED 1.3
 # define WEAPON_N 7
-# define MOVE_SPEED 3.5
+# define MOVE_SPEED 1.5
 # define MOVE_SPEED_MOUSE 1.5
 
 // colors

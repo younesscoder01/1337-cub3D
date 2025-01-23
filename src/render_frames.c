@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/22 16:22:44 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:20:08 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
     int i;
     int j;
     double alpha;
-    double beta;
     int shade_color;
 
     i = 0;
-    alpha = 1;
-    beta = 0.000005;
     while (i < img->img_height / 2)
     {
         j = 0;
-        alpha += beta;
+        alpha = (double)i / (double)img->img_height;
         shade_color = darken_color(color1, alpha);
         while (j < img->img_width)
         {
@@ -35,18 +32,20 @@ void floor_ceiling(t_img_info *img, int color1, int color2)
         }
         i++;
     }
-    alpha = 0.05;
+    alpha = 1;
     while (i < img->img_height)
     {
         j = 0;
-        alpha += beta;
+        alpha += j * 0.1;
         while (j < img->img_width)
         {
             shade_color = darken_color(color2, alpha);
             ft_put_pixel(img, j, i, shade_color);
             j++;
         }
+        alpha = (img->img_height - (double)i) / ((double)img->img_height / 2);
         i++;
+
     }
 }
 
@@ -86,7 +85,7 @@ int update(void *data1)
         floor_ceiling(data->game_frame, data->color[0], data->color[1]);
         render_3d_walls(data);
         create_frame(data, 0, 0);
-        take_weapon(data);
+       take_weapon(data);
     }
     render_bullets(data);
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0, 0);
