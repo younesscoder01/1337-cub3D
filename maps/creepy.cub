@@ -1,10 +1,10 @@
-NO textures/simonkraft/respawn_anchor_side0.xpm
-EA textures/simonkraft/respawn_anchor_side2.xpm
-SO textures/simonkraft/respawn_anchor_side4.xpm
-WE textures/simonkraft/respawn_anchor_side3.xpm
+NO ./wall_txt/Brown1.xpm
+EA  ./wall_txt/evil.xpm
+SO  ./wall_txt/Brown3.xpm
+WE  ./wall_txt/Brown6.xpm
 
-C 35,19,73
-F 15,6,40
+F 220,100,2
+C 225,30,2
 
 111111111111111
 111111000111111
@@ -19,4 +19,3 @@ F 15,6,40
 111110000011111
 111111000111111
 111111111111111
-

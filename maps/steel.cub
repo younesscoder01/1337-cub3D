@@ -1,7 +1,7 @@
-EA ./wall_txt/Special.xpm
-NO ./wall_txt/Special.xpm
-SO ./wall_txt/Special.xpm
-WE ./wall_txt/Special.xpm
+EA ./textures/steel.xpm
+NO ./textures/steel.xpm
+SO ./textures/steel.xpm
+WE ./textures/steel.xpm
 
 F 184,113,39
 C 254,254,254

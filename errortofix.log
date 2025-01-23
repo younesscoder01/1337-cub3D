@@ -3,3 +3,8 @@ fix symbols in color fix
 //fix conditional jump 76:renderframes
 //fixinitialze data->txt with null
 //free one byte in get_next_line
+//check the direction of the textures
+
+
+
+

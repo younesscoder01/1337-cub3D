@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/01 12:47:08 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:31:41 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,29 @@
 #include <limits.h>
 # include "../libft/libft.h"
 
-
-# define WINDOW_WIDTH 640
-# define WINDOW_HEIGHT 480
+//FOR TESTING
+// # define WINDOW_WIDTH 640
+// # define WINDOW_HEIGHT 480
+# define MOVE_SPEED 5.5
+# define MOVE_SPEED_MOUSE 5.5
+# define ROTATION_SPEED 2.7
 
 /*------------Macros-------------*/
 # define WALL_STRIP_WIDTH 1
 # define FOV 60
 # define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
-// # define WINDOW_WIDTH 800
-// # define WINDOW_HEIGHT 600
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define TILE_SIZE 64
 # define FRAME_WIDTH (TILE_SIZE * 4)
 # define FRAME_HEIGHT (FRAME_WIDTH / 2)
 # define RADIUS (TILE_SIZE / 15)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI		3.14159265358979323846
-# define ROTATION_SPEED 1.3
+// # define ROTATION_SPEED 0.7
 # define WEAPON_N 7
-# define MOVE_SPEED 3.5
-# define MOVE_SPEED_MOUSE 1.5
+// # define MOVE_SPEED 1.5
+// # define MOVE_SPEED_MOUSE 1.5
 
 
 //colors
