@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 12:44:24 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:45:19 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	main(int argc, char **argv)
 	init_weapon_names(&data);
 	init_weapons(&data, 0, 0, 0);
 	if (!init_textures(&data, data.txt, 0))
-	{
-		printf("mlx_xpm_to_image fails\n");
-		return (false);
-	}
+		return (printf("mlx_xpm_to_image fails\n"), false);
 	p_setup(&data.player, data.map);
 	init_bullet(&data);
 	mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
