@@ -6,13 +6,13 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 09:52:03 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 09:58:02 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-void	floor(int i, t_img_info *img, int color1, int color2)
+void	r_floor(int i, t_img_info *img, int color2)
 {
 	double	alpha;
 	int		shade_color;
@@ -54,7 +54,7 @@ void	floor_ceiling(t_img_info *img, int color1, int color2)
 		}
 		i++;
 	}
-	floor(i, img, color1, color2);
+	r_floor(i, img, color2);
 }
 
 void	movement_update(t_data *data)

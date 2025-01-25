@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/25 09:32:15 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:14:13 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_wall(float x, float y, char **map, t_data *data)
 	if (map[map_grid_y][map_grid_x] == 'D' && distance(data->player.x,
 			data->player.y, x, y) <= TILE_SIZE * 2)
 	{
-		is_wall_check(map_grid_x, map_grid_y, data);
+		return (is_wall_check(map_grid_x, map_grid_y, data));
 	}
 	return (map[map_grid_y][map_grid_x] == '1'
 		|| map[map_grid_y][map_grid_x] == 'D');
