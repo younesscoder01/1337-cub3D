@@ -10,8 +10,8 @@ SRC = ./src/cub3D.c ./src/mini_map.c ./src/mini_map_utils.c ./src/render_frames.
 		./src/check.c src/check1.c src/check2.c \
 		./src/check_utils.c ./src/sprite_animation_v2.c ./src/keys.c ./src/mouse.c \
 		./src/mini_map_v2.c  ./src/parser.c ./src/initialize_data_01.c \
-		./src/ray_casting.c ./src/math_utils.c  ./src/render_walls.c ./src/mini_map_utils2.c \
-		./src/ray_casting_2.c ./src/ray_casting_3.c ./render_walls_utils.c
+		./src/ray_casting.c ./src/render_walls.c ./src/mini_map_utils2.c \
+		./src/ray_casting_2.c ./src/ray_casting_3.c ./src/render_walls_utils.c
 OBJ = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 NAME = cub3D
 
