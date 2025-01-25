@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 09:45:52 by ysahraou          #+#    #+#             */
+/*   Updated: 2025/01/25 09:45:53 by ysahraou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 char	*_set_line(char **line_buffer, ssize_t nbyte)
@@ -59,7 +71,7 @@ char	*gnl(int fd)
 	char		*line;
 	static char	*left;
 
-	if(fd == -1)
+	if (fd == -1)
 		free(left);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

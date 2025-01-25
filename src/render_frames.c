@@ -6,47 +6,55 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 09:31:31 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 09:52:03 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
+void	floor(int i, t_img_info *img, int color1, int color2)
+{
+	double	alpha;
+	int		shade_color;
+	int		j;
+
+	alpha = 1;
+	while (i < img->img_height)
+	{
+		j = 0;
+		alpha += j * 0.1;
+		while (j < img->img_width)
+		{
+			shade_color = darken_color(color2, alpha);
+			ft_put_pixel(img, j, i, shade_color);
+			j++;
+		}
+		alpha = (img->img_height - (double)i) / ((double)img->img_height / 2);
+		i++;
+	}
+}
+
 void	floor_ceiling(t_img_info *img, int color1, int color2)
 {
-    int i;
-    int j;
-    double alpha;
-    int shade_color;
+	int		i;
+	int		j;
+	double	alpha;
+	int		shade_color;
 
-    i = 0;
-    while (i < img->img_height / 2)
-    {
-        j = 0;
-        alpha = (double)i / (double)img->img_height;
-        shade_color = darken_color(color1, alpha);
-        while (j < img->img_width)
-        {
-            ft_put_pixel(img, j, i, shade_color);
-            j++;
-        }
-        i++;
-    }
-    alpha = 1;
-    while (i < img->img_height)
-    {
-        j = 0;
-        alpha += j * 0.1;
-        while (j < img->img_width)
-        {
-            shade_color = darken_color(color2, alpha);
-            ft_put_pixel(img, j, i, shade_color);
-            j++;
-        }
-        alpha = (img->img_height - (double)i) / ((double)img->img_height / 2);
-        i++;
-
-    }
+	i = 0;
+	while (i < img->img_height / 2)
+	{
+		j = 0;
+		alpha = (double)i / (double)img->img_height;
+		shade_color = darken_color(color1, alpha);
+		while (j < img->img_width)
+		{
+			ft_put_pixel(img, j, i, shade_color);
+			j++;
+		}
+		i++;
+	}
+	floor(i, img, color1, color2);
 }
 
 void	movement_update(t_data *data)
