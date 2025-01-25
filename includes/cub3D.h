@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 10:31:42 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:21:55 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,5 +281,6 @@ void			set_0_ray_info(t_data *param, int i, double *distances,
 void			set_1_ray_info(t_data *param, int i, double *distances,
 					int *hits);
 void			set_valuse(int *foundhits, int *hits, double *distances);
-int				is_wall_check(int map_grid_x, int map_grid_y, t_data *data);
+int				is_wall_check(int map_grid_x, int map_grid_y, t_data *data,
+					char **map);
 #endif
