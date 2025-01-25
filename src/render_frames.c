@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 09:58:02 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:31:32 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	update(void *data1)
 	t_data	*data;
 
 	data = (t_data *)data1;
+	movement_update(data);
 	if (data->animate_weapon)
 		animate_weapon_shoting(data,
 			data->all_weapons[data->weapon_numb].shoting_end);
@@ -107,6 +108,5 @@ int	update(void *data1)
 	render_bullets(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0,
 		0);
-	movement_update(data);
 	return (0);
 }

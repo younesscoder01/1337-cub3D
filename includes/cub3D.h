@@ -6,7 +6,7 @@
 /*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 10:17:22 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:31:42 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@
 # define RADIUS (TILE_SIZE / 15)
 # define LINE_LENGTH (RADIUS * 3)
 # define M_PI 3.14159265358979323846
-# define ROTATION_SPEED 3.3
+# define ROTATION_SPEED 1.3
 # define WEAPON_N 7
-# define MOVE_SPEED 6.5
+# define MOVE_SPEED 4.5
 # define MOVE_SPEED_MOUSE 1.5
 
 // colors
