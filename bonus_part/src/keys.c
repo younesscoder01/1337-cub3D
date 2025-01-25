@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:21:38 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/23 13:40:33 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:35:29 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int	key_p(int keycode, void *data1)
 	if (keycode == KEY_A || keycode == KEY_D)
 		data->player.is_move_side = 1;
 	if (keycode == KEY_W || keycode == KEY_UP || keycode == KEY_D)
-		data->player.walkDirection = 1;
+		data->player.walkdirection = 1;
 	else if (keycode == KEY_S || keycode == KEY_DOWN || keycode == KEY_A)
-		data->player.walkDirection = -1;
+		data->player.walkdirection = -1;
 	else if (keycode == KEY_LEFT)
-		data->player.turnDirection = -1;
+		data->player.turndirection = -1;
 	else if (keycode == KEY_RIGHT)
-		data->player.turnDirection = 1;
+		data->player.turndirection = 1;
 	else if (keycode == ESC)
 		close_win(data);
 	else if (keycode == SPACE || keycode == 1)
@@ -70,21 +70,21 @@ int	key_r(int keycode, void *var)
 
 	data = (t_data *)var;
 	if (keycode == KEY_W)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_UP)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_A)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_S)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_DOWN)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_D)
-		data->player.walkDirection = 0;
+		data->player.walkdirection = 0;
 	else if (keycode == KEY_LEFT)
-		data->player.turnDirection = 0;
+		data->player.turndirection = 0;
 	else if (keycode == KEY_RIGHT)
-		data->player.turnDirection = 0;
+		data->player.turndirection = 0;
 	if (keycode == KEY_A || keycode == KEY_D)
 		data->player.is_move_side = 0;
 	return (0);

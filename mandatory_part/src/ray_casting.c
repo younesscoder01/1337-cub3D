@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/25 10:14:13 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:35:54 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	castallrays(t_data *param)
 	int		i;
 	double	rayangle;
 
-	rayangle = param->player.rotationAngle - (FOV / 2);
+	rayangle = param->player.rotationangle - (FOV / 2);
 	i = 0;
 	while (i < NUM_RAYS)
 	{

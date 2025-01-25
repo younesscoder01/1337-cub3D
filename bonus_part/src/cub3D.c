@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 12:45:19 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:28:31 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	loading(t_data *data)
 	loading.img = mlx_xpm_file_to_image(data->mlx, "./textures/loading.xpm",
 			&loading.img_width, &loading.img_height);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, loading.img, 0, 0);
+	mlx_destroy_image(data->mlx,loading.img);
 }
 
 int	main(int argc, char **argv)

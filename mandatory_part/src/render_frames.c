@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 15:55:50 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:36:33 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ void	movement_update(t_data *data)
 	int		check_y;
 
 	if (data->mouse_x > 0 && data->mouse_x <= 20 && data->mouse_in == 1)
-		data->player.turnDirection = -1;
+		data->player.turndirection = -1;
 	else if (data->mouse_x <= 800 && data->mouse_x >= 780
 		&& data->mouse_in == 1)
-		data->player.turnDirection = 1;
-	data->player.rotationAngle += data->player.turnDirection
-		* data->player.rotationSpeed;
-	data->player.rotationAngle = normalizeangle(data->player.rotationAngle);
-	move_step = data->player.moveSpeed * data->player.walkDirection;
-	check_x = round(move_step * (cos(deg2rad(data->player.rotationAngle + (90
+		data->player.turndirection = 1;
+	data->player.rotationangle += data->player.turndirection
+		* data->player.rotationspeed;
+	data->player.rotationangle = normalizeangle(data->player.rotationangle);
+	move_step = data->player.movespeed * data->player.walkdirection;
+	check_x = round(move_step * (cos(deg2rad(data->player.rotationangle + (90
 							* data->player.is_move_side)))));
-	check_y = round(move_step * (sin(deg2rad(data->player.rotationAngle + (90
+	check_y = round(move_step * (sin(deg2rad(data->player.rotationangle + (90
 							* data->player.is_move_side)))));
 	if (data->map[data->player.y / TILE_SIZE][(data->player.x + check_x)
 		/ TILE_SIZE] != '1')

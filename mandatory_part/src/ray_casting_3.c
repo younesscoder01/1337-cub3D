@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 23:35:43 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/24 23:40:47 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:33:35 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_0_ray_info(t_data *param, int i, double *distances, int *hits)
 	param->rays[i].distance = distances[0];
 	param->rays[i].hit_x = hits[0];
 	param->rays[i].hit_y = hits[1];
-	param->rays[i].Was_hit_vertical = 0;
+	param->rays[i].was_hit_vertical = 0;
 }
 
 void	set_1_ray_info(t_data *param, int i, double *distances, int *hits)
@@ -37,7 +37,7 @@ void	set_1_ray_info(t_data *param, int i, double *distances, int *hits)
 	param->rays[i].distance = distances[1];
 	param->rays[i].hit_x = hits[2];
 	param->rays[i].hit_y = hits[3];
-	param->rays[i].Was_hit_vertical = 1;
+	param->rays[i].was_hit_vertical = 1;
 }
 
 int	is_wall_check(int map_grid_x, int map_grid_y, t_data *data)

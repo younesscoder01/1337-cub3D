@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 15:23:28 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:36:33 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ typedef struct s_ray
 	bool		is_up;
 	bool		is_right;
 	bool		is_left;
-	bool		Was_hit_vertical;
+	bool		was_hit_vertical;
 } t_rays[NUM_RAYS];
 // player struct
 typedef struct s_player
@@ -124,11 +124,11 @@ typedef struct s_player
 	int			x;
 	int			y;
 	double		radius;
-	double		turnDirection;
-	double		walkDirection;
-	double		rotationAngle;
-	double		moveSpeed;
-	double		rotationSpeed;
+	double		turndirection;
+	double		walkdirection;
+	double		rotationangle;
+	double		movespeed;
+	double		rotationspeed;
 	int			is_move_side;
 }				t_player;
 

@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 11:25:31 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 11:03:42 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:35:54 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	texture_apply(t_data *data, double *vars, int i)
 
 	texture_offset_x = 0;
 	texture_offset_y = 0;
-	if (data->rays[i].Was_hit_vertical)
+	if (data->rays[i].was_hit_vertical)
 		texture_offset_x = (int)data->rays[i].hit_y % TILE_SIZE;
 	else
 		texture_offset_x = (int)data->rays[i].hit_x % TILE_SIZE;
@@ -82,7 +82,7 @@ void	render_3d_walls(t_data *data)
 	{
 		vars[0] = ((double)WINDOW_WIDTH / 2.0) / tan(deg2rad(FOV / 2));
 		vars[2] = data->rays[i].distance * cos(deg2rad(data->rays[i].angle)
-				- deg2rad(data->player.rotationAngle));
+				- deg2rad(data->player.rotationangle));
 		vars[3] = 1.0 - (125.0 / vars[2]);
 		vars[1] = calculate_wall_strip_height(vars[2], vars[0]);
 		vars[4] = calculate_wall_height_top(vars[1]);

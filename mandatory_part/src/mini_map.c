@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 10:10:37 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/23 10:12:37 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:35:54 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	render_p(t_img_info *img, t_player *p, int i, int j)
 		}
 		i++;
 	}
-	x1 = p->x + cos(deg2rad(p->rotationAngle)) * LINE_LENGTH;
-	y1 = p->y + sin(deg2rad(p->rotationAngle)) * LINE_LENGTH;
+	x1 = p->x + cos(deg2rad(p->rotationangle)) * LINE_LENGTH;
+	y1 = p->y + sin(deg2rad(p->rotationangle)) * LINE_LENGTH;
 	cor.x = p->x;
 	cor.y = p->y;
 	cor.x1 = x1;

@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 21:01:46 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:36:33 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,6 @@ double			normalizeangle(double angle);
 int				mouse_hook(int x, int y, t_data *data);
 int				mouse_down(int button, int x, int y, t_data *data);
 void			draw_line_angle(t_data *data, double angle, int x, int y);
-void			draw_line(t_data *data, int x, int y, int x1, int y1);
 double			calc_dist(long x, long x1, long y, long y1);
 double			rad2deg(double angle);
 double			norm_angle(double angle);
@@ -281,7 +280,15 @@ void			set_0_ray_info(t_data *param, int i, double *distances,
 void			set_1_ray_info(t_data *param, int i, double *distances,
 					int *hits);
 void			set_valuse(int *foundhits, int *hits, double *distances);
-int				is_wall_check(int map_grid_x, int map_grid_y, t_data *data);
+int				get_texture_color(t_data *data, int i, double texture_offset_x,
+					double texture_offset_y);
+double			calculate_wall_height_bottom(double wallStripHeight);
+double			calculate_wall_height_top(double wallStripHeight);
+void			set_0_ray_info(t_data *param, int i, double *distances,
+					int *hits);
+void			set_1_ray_info(t_data *param, int i, double *distances,
+					int *hits);
+void			set_valuse(int *foundhits, int *hits, double *distances);
 int				get_texture_color(t_data *data, int i, double texture_offset_x,
 					double texture_offset_y);
 double			calculate_wall_height_bottom(double wallStripHeight);
