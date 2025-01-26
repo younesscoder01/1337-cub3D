@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/26 01:47:00 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:11:03 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,9 @@ int	update(void *data1)
 
 	data = (t_data *)data1;
 	movement_update(data);
-	render_minimap(data);
 	castallrays(data);
 	floor_ceiling(data->game_frame, data->color[0], data->color[1]);
 	render_3d_walls(data);
-	create_frame(data, 0, 0, (t_line_cor){0, 0, 0, 0});
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->game_frame->img, 0,
 		0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:27:19 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/26 00:35:12 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:12:56 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ int	is_wall(float x, float y, char **map, t_data *data)
 		|| map[map_grid_y][map_grid_x] == 'D');
 }
 
-void	calculate_distances(t_data *param, int *foundHits, int *hits,
+void	calculate_distances(t_data *param, int *foundhits, int *hits,
 		double *distances)
 {
-	if (foundHits[0])
+	if (foundhits[0])
 		distances[0] = distance(param->player.x, param->player.y, hits[0],
 				hits[1]);
 	else
 		distances[0] = INT_MAX;
-	if (foundHits[1])
+	if (foundhits[1])
 		distances[1] = distance(param->player.x, param->player.y, hits[2],
 				hits[3]);
 	else
@@ -63,7 +63,7 @@ void	castray(t_data *param, int i, double rayAngle)
 	t_hits_dist	hits_dist;
 
 	set_valuse(foundhits, hits, distances);
-	hits_dist.foundHits = foundhits;
+	hits_dist.foundhits = foundhits;
 	hits_dist.hits = hits;
 	hits_dist.distances = distances;
 	rayAngle = normalizeangle(rayAngle);

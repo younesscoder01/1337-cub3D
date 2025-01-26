@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 22:02:16 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/23 22:12:43 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:11:20 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	line_processing(char *str, int *item, int mod)
 	{
 		if (mod && (*str != 'N' && *str != 'E' && *str != 'W' && *str != 'S'
 				&& *str != '0' && *str != '1' && *str != ' ' && *str != '\n'
-				&& *str != 'D'))
+			))
 			return (false);
 		if (item && (*str == 'N' || *str == 'E' || *str == 'W' || *str == 'S'))
 			*item += 1;

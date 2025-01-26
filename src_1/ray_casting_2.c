@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 22:00:51 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/24 23:51:16 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:12:56 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	horizontal_interception(t_data *param, int i, double rayAngle,
 	{
 		if (is_wall(intercepts[0], intercepts[1] - steps[2], param->map, param))
 		{
-			hits_dist->foundHits[0] = 1;
+			hits_dist->foundhits[0] = 1;
 			hits_dist->hits[0] = intercepts[0];
 			hits_dist->hits[1] = intercepts[1] - steps[2];
 			break ;
@@ -86,7 +86,7 @@ void	vertical_interception(t_data *param, int i, double rayAngle,
 	{
 		if (is_wall(intercepts[0] - steps[2], intercepts[1], param->map, param))
 		{
-			hits_dist->foundHits[1] = 1;
+			hits_dist->foundhits[1] = 1;
 			hits_dist->hits[2] = intercepts[0] - steps[2];
 			hits_dist->hits[3] = intercepts[1];
 			break ;
