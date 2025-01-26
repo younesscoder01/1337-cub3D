@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 12:45:19 by ysahraou         ###   ########.fr       */
+/*   Updated: 2025/01/25 15:53:57 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
-
-void	loading(t_data *data)
-{
-	t_img_info	loading;
-
-	loading.img_height = 800;
-	loading.img_width = 600;
-	loading.img = mlx_xpm_file_to_image(data->mlx, "./textures/loading.xpm",
-			&loading.img_width, &loading.img_height);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, loading.img, 0, 0);
-}
 
 int	main(int argc, char **argv)
 {
@@ -34,13 +23,9 @@ int	main(int argc, char **argv)
 	if (!setup(argv, &data))
 		return (1);
 	intialize_data(&data, data.map);
-	loading(&data);
-	init_weapon_names(&data);
-	init_weapons(&data, 0, 0, 0);
 	if (!init_textures(&data, data.txt, 0))
 		return (printf("mlx_xpm_to_image fails\n"), false);
 	p_setup(&data.player, data.map);
-	init_bullet(&data);
 	mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
 	mlx_hook(data.mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);
 	mlx_hook(data.mlx_win, ON_KEYUP, 1L << 1, key_r, &data);
