@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 22:03:17 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/23 22:13:29 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:30:40 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ int	provide_config(t_data *d, char **arr, char *t, char **tp)
 	int	i[3];
 
 	i[0] = 0;
+	(void)t;
 	while (i[0] < 6)
 	{
 		tp = ft_split(arr[i[0]], ' ');
 		if (!tp || !tp[1] || (tp[1] && tp[2]))
 			return (free_arr((void **)tp, 0, 1), false);
-		t = tp[1];
-		tp[1] = ft_strtrim(tp[1], "\n");
-		free(t);
 		i[2] = open(tp[1], 0644);
 		if (i[2] < 0 && i[0] < 4)
 			return (free_txt(d->txt), free_arr((void **)tp, 0, 1), false);

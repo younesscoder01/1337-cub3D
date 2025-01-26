@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:23:40 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/23 22:04:48 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:46:09 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,24 @@
 
 int	process_texture_line(char *read, char **arr, int *tot, int fd)
 {
-	int	ret;
+	int		ret;
+	char	*tmp;
 
-	ret = line_processing(read, NULL, 0);
+	tmp = ft_strtrim(read, " ");
+	ret = line_processing(tmp, NULL, 0);
 	if (!ret)
 	{
+		free(tmp);
 		free(read);
 		close(fd);
 		return (free_arr((void **)arr, 6, 0), false);
 	}
+	free(tmp);
 	*tot += ret;
-	arr[ret - 2] = ft_strdup(read);
+	arr[ret - 2] = ft_strtrim(read, "\n");
+	tmp = arr[ret - 2];
+	arr[ret - 2] = ft_strtrim(tmp, " ");
+	free(tmp);
 	free(read);
 	return (true);
 }

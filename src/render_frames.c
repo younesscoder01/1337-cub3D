@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 19:36:33 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:47:00 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	update(void *data1)
 
 	data = (t_data *)data1;
 	movement_update(data);
-
 	render_minimap(data);
 	castallrays(data);
 	floor_ceiling(data->game_frame, data->color[0], data->color[1]);
