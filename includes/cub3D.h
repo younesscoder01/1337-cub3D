@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/26 19:13:25 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 20:18:12 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@
 /*------------Macros-------------*/
 # define WALL_STRIP_WIDTH 1
 # define FOV 60
-# define NUM_RAYS WINDOW_WIDTH / WALL_STRIP_WIDTH
+# define NUM_RAYS 800
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
 # define TILE_SIZE 64
-# define FRAME_WIDTH (TILE_SIZE * 4)
-# define FRAME_HEIGHT (FRAME_WIDTH / 2)
-# define RADIUS (TILE_SIZE / 15)
-# define LINE_LENGTH (RADIUS * 3)
+# define FRAME_WIDTH 256
+# define FRAME_HEIGHT 128
+# define RADIUS 4
+# define LINE_LENGTH 12
 # define M_PI 3.14159265358979323846
 # define ROTATION_SPEED 1.3
 # define WEAPON_N 7
