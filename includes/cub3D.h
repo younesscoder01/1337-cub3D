@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:29:47 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/26 00:36:10 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:13:25 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_ray
 	bool		is_right;
 	bool		is_left;
 	bool		was_hit_vertical;
-} t_rays[NUM_RAYS];
+}	t_rays[NUM_RAYS];
 // player struct
 typedef struct s_player
 {
@@ -196,7 +196,7 @@ typedef struct s_line_cor
 
 typedef struct s_hits_dist
 {
-	int			*foundHits;
+	int			*foundhits;
 	int			*hits;
 	double		*distances;
 }				t_hits_dist;
@@ -295,5 +295,5 @@ double			calculate_wall_height_bottom(double wallStripHeight);
 double			calculate_wall_height_top(double wallStripHeight);
 int				is_wall_check(int map_grid_x, int map_grid_y, t_data *data,
 					char **map);
-int	is_wall_check_1(int map_grid_x, int map_grid_y, t_data *data);
+int				is_wall_check_1(int map_grid_x, int map_grid_y, t_data *data);
 #endif
