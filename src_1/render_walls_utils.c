@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:01:38 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/25 19:33:35 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:02:08 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ int	get_texture_color(t_data *data, int i, double texture_offset_x,
 		/ TILE_SIZE] == 'D')
 		return (get_px_color(data->door, texture_offset_x, texture_offset_y));
 	else if (data->rays[i].is_down && !data->rays[i].was_hit_vertical)
-		return (get_px_color(data->textures[0], texture_offset_x,
+		return (get_px_color(data->textures[3], texture_offset_x,
 				texture_offset_y));
 	else if (data->rays[i].is_up && !data->rays[i].was_hit_vertical)
-		return (get_px_color(data->textures[1], texture_offset_x,
+		return (get_px_color(data->textures[0], texture_offset_x,
 				texture_offset_y));
 	else if (data->rays[i].is_right && data->rays[i].was_hit_vertical)
-		return (get_px_color(data->textures[2], texture_offset_x,
+		return (get_px_color(data->textures[1], texture_offset_x,
 				texture_offset_y));
 	else if (data->rays[i].is_left && data->rays[i].was_hit_vertical)
-		return (get_px_color(data->textures[3], texture_offset_x,
+		return (get_px_color(data->textures[2], texture_offset_x,
 				texture_offset_y));
 	return (0);
 }
