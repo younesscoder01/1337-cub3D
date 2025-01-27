@@ -6,7 +6,7 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 22:03:17 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/27 15:58:54 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:28:45 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int	check_color(int mod, char *col, t_data *data)
 	int		check;
 	int		i;
 	int		c[3];
-	char	*test;
 
 	i = 0;
-	test = ft_strrchr(col, ',');
-	if (*(test + 1) == '\0')
+	if (!check_comma(col))
 		return (false);
 	tmp = ft_split(col, ',');
 	while (i < 3)
