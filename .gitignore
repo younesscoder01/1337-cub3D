@@ -5,6 +5,7 @@
 #program name
 cub3D
 .gdb_history
+cub3D_bonus
 # Object files
 *.o
 *.ko

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:42:54 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 19:36:33 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:21:43 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	update(void *data1)
 
 	data = (t_data *)data1;
 	movement_update(data);
+	if (data->frame_index >= data->all_weapons[data->weapon_numb].frame_numb)
+		data->frame_index = 0;
 	if (data->animate_weapon)
 		animate_weapon_shoting(data,
 			data->all_weapons[data->weapon_numb].shoting_end);
