@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysahraou <ysahraou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 09:25:55 by ysahraou          #+#    #+#             */
-/*   Updated: 2025/01/25 15:53:57 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:20:01 by ysahraou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int	main(int argc, char **argv)
 	mlx_hook(data.mlx_win, ON_DESTROY, 0, close_win, &data);
 	mlx_hook(data.mlx_win, ON_KEYDOWN, 1L << 0, key_p, &data);
 	mlx_hook(data.mlx_win, ON_KEYUP, 1L << 1, key_r, &data);
-	mlx_hook(data.mlx_win, ON_MOUSEDOWN, 1L << 2, mouse_down, &data);
-	mlx_hook(data.mlx_win, ON_MOUSEMOVE, 1L << 6, mouse_hook, &data);
-	mlx_hook(data.mlx_win, 8, 1L << 5, mouse_out, &data);
 	mlx_loop_hook(data.mlx, update, &data);
 	mlx_loop(data.mlx);
 	return (0);
