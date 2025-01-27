@@ -6,11 +6,26 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 22:03:17 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/26 01:29:29 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:58:42 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+int	check_comma(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[0] == ',' || (str[i] == ',' && str[i + 1] == ',')
+			|| (str[i] == ',' && str[i + 1] == '\0'))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int	check_color(int mod, char *col, t_data *data)
 {
@@ -18,11 +33,9 @@ int	check_color(int mod, char *col, t_data *data)
 	int		check;
 	int		i;
 	int		c[3];
-	char	*test;
 
 	i = 0;
-	test = ft_strrchr(col, ',');
-	if (*(test + 1) == '\0')
+	if (!check_comma(col))
 		return (false);
 	tmp = ft_split(col, ',');
 	while (i < 3)
@@ -57,9 +70,8 @@ int	provide_config(t_data *d, char **arr, char *t, char **tp)
 		i[1] = line_processing(arr[i[0]], NULL, 0);
 		if (i[1] < 6)
 			d->txt[i[1] - 2] = ft_strdup(tp[1]);
-		else
-			if (!check_color(i[0] - 4, tp[1], d))
-				return (free_txt(d->txt), free_arr((void **)tp, 0, 1), 0);
+		else if (!check_color(i[0] - 4, tp[1], d))
+			return (free_txt(d->txt), free_arr((void **)tp, 0, 1), 0);
 		free_arr((void **)tp, 0, 1);
 		i[0]++;
 	}

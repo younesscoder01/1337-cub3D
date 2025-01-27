@@ -6,11 +6,26 @@
 /*   By: rbenmakh <rbenmakh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 22:03:17 by rbenmakh          #+#    #+#             */
-/*   Updated: 2025/01/26 01:30:40 by rbenmakh         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:58:54 by rbenmakh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+int	check_comma(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[0] == ',' || (str[i] == ',' && str[i + 1] == ',')
+			|| (str[i] == ',' && str[i + 1] == '\0'))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 int	check_color(int mod, char *col, t_data *data)
 {
